@@ -33,8 +33,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 [hidden]{display:none!important}
 
 /* start, lock, setup */
-#start{align-items:center;justify-content:center;gap:26px;padding:24px}
-#start img{max-height:56vh;max-width:76vw;border:3px solid var(--ink);border-radius:3px;box-shadow:5px 7px 0 rgba(38,34,29,.22)}
+#start{align-items:center;justify-content:center;gap:20px;padding:20px}
+#start img{max-height:38vh;max-width:70vw;border:3px solid var(--ink);border-radius:3px;box-shadow:5px 7px 0 rgba(38,34,29,.22)}
 .big{background:var(--yellow);color:var(--ink);border:3px solid var(--ink);border-radius:var(--wob);min-height:84px;padding:0 30px;
   font-family:var(--hand);font-size:30px;letter-spacing:.02em;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:14px;box-shadow:3px 4px 0 rgba(38,34,29,.25)}
 .big svg{width:34px;height:34px;fill:var(--ink)}
@@ -45,7 +45,6 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 #pw{font:inherit;font-family:-apple-system,system-ui,sans-serif;font-size:24px;padding:16px 18px;border:3px solid var(--ink);border-radius:6px;background:#f6ecd4;color:var(--ink);-webkit-user-select:text;user-select:text}
 #lockform .big{justify-content:center}
 #lockmsg{min-height:2.8em;font-family:-apple-system,system-ui,sans-serif;font-size:19px;font-weight:600;color:var(--red);text-align:center}
-#setupbtn{font-family:var(--hand);color:var(--muted);font-size:20px;text-decoration:underline;min-height:48px;padding:0 16px}
 #setup{align-items:center;justify-content:center;gap:22px;padding:28px;text-align:center}
 #setup h2{margin:0;font-family:var(--hand);font-size:34px;font-weight:400;color:var(--ink)}
 #setup p{margin:0;font-size:21px;line-height:1.4;max-width:30em}
@@ -54,6 +53,24 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 #dlstat{font-family:-apple-system,system-ui,sans-serif;font-size:19px;color:var(--muted);min-height:1.4em}
 .plain{min-height:60px;padding:0 28px;border:2.5px solid var(--ink);border-radius:var(--wob);font-family:var(--hand);font-size:23px}
 #start .sub{font-family:var(--hand);color:var(--muted);font-size:22px;text-align:center;min-height:1.3em;padding:0 12px}
+
+/* start-screen setup helpers */
+.big.alt{background:rgba(246,236,212,.75);min-height:72px;font-size:26px}
+.note{font-family:-apple-system,system-ui,sans-serif;font-size:17px;font-weight:600;color:var(--muted);text-align:center;max-width:22em;line-height:1.35;margin-top:-12px}
+.note.ok{color:var(--ink);font-size:19px}
+.helpbtn{font-family:var(--hand);font-size:20px;color:var(--ink);min-height:50px;padding:0 18px;border:2.5px solid var(--ink);border-radius:var(--wob);background:rgba(246,236,212,.55);
+  display:inline-flex;align-items:center;gap:10px;align-self:center}
+.helpbtn b{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#f6ecd4;font-family:-apple-system,system-ui,sans-serif;font-size:18px}
+#locknote{font-family:-apple-system,system-ui,sans-serif;font-size:19px;font-weight:600;line-height:1.35;text-align:center;background:var(--yellow);border:2.5px solid var(--ink);border-radius:6px;padding:12px 14px}
+#help{padding:22px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#help h2{margin:6px 0 14px;font-family:var(--hand);font-weight:400;font-size:32px;text-align:center}
+#help ol{list-style:none;margin:0 auto;padding:0;max-width:30em;display:flex;flex-direction:column;gap:14px}
+#help li{display:flex;gap:14px;align-items:flex-start;background:rgba(246,236,212,.7);border:2.5px solid var(--ink);border-radius:8px;padding:14px;font-family:-apple-system,system-ui,sans-serif;font-size:21px;line-height:1.35}
+#help li>b{flex:0 0 40px;height:40px;border-radius:50%;background:var(--yellow);border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--hand);font-size:24px;font-weight:400}
+#help li svg{width:30px;height:30px;vertical-align:-7px;margin:0 3px;fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#help li em{font-style:normal;font-weight:700}
+#help .small{font-size:17px;color:var(--muted);display:block;margin-top:4px}
+#helpok{margin:18px auto 8px;align-self:center}
 
 /* player */
 #head{padding:16px 22px 4px;text-align:center}
@@ -104,7 +121,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 #foot{display:flex;gap:12px;padding:8px 18px 12px}
 #foot button{flex:1;min-height:56px;border:2.5px solid var(--ink);border-radius:var(--wob);font-family:var(--hand);font-size:23px;background:rgba(246,236,212,.55)}
 #foot button:active{background:rgba(38,34,29,.18)}
-#aa{flex:0 0 76px!important;font-family:Georgia,serif!important}
+#aminus,#aplus{flex:0 0 66px!important;font-family:Georgia,serif!important;font-weight:700}
+#aminus{font-size:19px!important}#aplus{font-size:27px!important}
+#foot button:disabled{opacity:.35}
 
 /* list */
 #rows{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 8px}
@@ -131,6 +150,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     <input id="pw" type="text" inputmode="text" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off" enterkeyhint="go">
     <button class="big" type="submit">Open</button>
     <div id="lockmsg"></div>
+    <div id="locknote" hidden>First add this page to the Home Screen, then open it from there and type the password.</div>
+    <button type="button" class="helpbtn" id="help0"><b>?</b>How to add to the Home Screen</button>
   </form>
 </section>
 
@@ -138,7 +159,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   <img id="cover" alt="">
   <button class="big" id="go"><svg viewBox="0 0 24 24"><path d="M7 4v16l14-8z"/></svg><span id="golabel">Play</span></button>
   <div class="sub" id="gosub"></div>
-  <button id="setupbtn">Set up offline listening</button>
+  <button class="big alt" id="setupbtn"><svg viewBox="0 0 24 24"><path d="M11 3h2v9.200l3.300-3.300 1.400 1.400L12 16l-5.700-5.700 1.400-1.400 3.300 3.300zM5 19h14v2H5z"/></svg><span id="setuplabel">Download all stories</span></button>
+  <div class="note" id="setupnote"></div>
+  <button class="helpbtn" id="help1"><b>?</b>How to add to the Home Screen</button>
 </section>
 
 <section class="screen" id="setup" hidden>
@@ -148,6 +171,17 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   <div id="dlstat"></div>
   <button class="big" id="dlgo">Download all stories</button>
   <button class="plain" id="dlback">Back</button>
+</section>
+
+<section class="screen" id="help" hidden>
+  <h2>Add it to the Home Screen</h2>
+  <ol>
+    <li><b>1</b><span>In <em>Safari</em>, tap the <em>Share</em> button <svg viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4M6 11H5v10h14V11h-1"/></svg><span class="small">It is at the bottom on an iPhone and at the top on an iPad. If you can't see it, tap the ••• button first.</span></span></li>
+    <li><b>2</b><span>Scroll down the list and tap <em>Add to Home Screen</em> <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></svg></span></li>
+    <li><b>3</b><span>Tap <em>Add</em> in the top corner.</span></li>
+    <li><b>4</b><span>Close Safari. Find the new icon on the Home Screen and open it from there.<span class="small">Type the password and download the stories inside that app, not in Safari.</span></span></li>
+  </ol>
+  <button class="big" id="helpok">Got it</button>
 </section>
 
 <section class="screen" id="player" hidden>
@@ -162,7 +196,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     <button class="c" id="nst" aria-label="Next story"><span class="r"><svg viewBox="0 0 24 24"><path d="M15.500 5H18v14h-2.500zM4 5v14l10.500-7z"/></svg></span>Next story</button>
   </div>
   <div id="speed"><button id="slower" aria-label="Read slower">Slower</button><div id="gauge" aria-hidden="true"></div><button id="faster" aria-label="Read faster">Faster</button></div>
-  <div id="foot"><button id="open">All stories</button><button id="aa" aria-label="Text size">Aa</button></div>
+  <div id="foot"><button id="open">All stories</button><button id="aminus" aria-label="Smaller text">A−</button><button id="aplus" aria-label="Bigger text">A+</button></div>
 </section>
 
 <section class="screen" id="list" hidden>
@@ -176,15 +210,15 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 let STORIES=[], META={title:"",author:""};
 const $=id=>document.getElementById(id), au=$('au');
 const KEY='pop.stories.v1';
-let st={i:0,t:0,done:{},fs:1,sp:0}, cues=[], ci=-1, cuesFor=-1, wantPlay=false;
+let st={i:0,t:0,done:{},tz:3,sp:0}, cues=[], ci=-1, cuesFor=-1, wantPlay=false;
 let words=[], chunks=[], wi=-1, seeking=false;
 try{Object.assign(st,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
 const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=String(s%60).padStart(2,'0');return h?h+':'+String(m).padStart(2,'0')+':'+x:m+':'+x};
 const mins=s=>{const m=Math.max(1,Math.round(s/60));return m<60?m+' min':Math.floor(m/60)+' hr '+(m%60?m%60+' min':'')};
-const SIZES=[24,28,34,42], SP_MID=.9, SP_STEP=.025, SP_MAX=6;
-function applySize(){const big=window.innerWidth>=700?1.33:1;document.documentElement.style.setProperty('--fs',Math.round(SIZES[st.fs]*big)+'px');if(words.length){setTimeout(()=>place(ci),60)}}
-if(!(st.fs>=0&&st.fs<SIZES.length))st.fs=1;
+const SIZES=[24,28,34,42,50,58], SP_MID=.9, SP_STEP=.025, SP_MAX=6;
+function applySize(){const big=window.innerWidth>=700?1.33:1;document.documentElement.style.setProperty('--fs',Math.round(SIZES[st.tz]*big)+'px');$('aminus').disabled=st.tz<=0;$('aplus').disabled=st.tz>=SIZES.length-1;if(words.length){setTimeout(()=>place(ci),60)}}
+if(!(Number.isInteger(st.tz)&&st.tz>=0&&st.tz<SIZES.length))st.tz=3;
 if(!(Number.isInteger(st.sp)&&Math.abs(st.sp)<=SP_MAX))st.sp=0;
 /* The middle of the rule is the normal reading pace (a touch under the narration's own speed). */
 const rateNow=()=>Math.round((SP_MID+st.sp*SP_STEP)*1000)/1000;
@@ -257,7 +291,7 @@ async function countSaved(){let n=0;try{const c=await caches.open(MEDIA);const k
   for(const s of STORIES)if(have.has(aurl(s.id))&&have.has(turl(s.id)))n++}catch(e){}return n}
 async function dlRefresh(){const n=await countSaved(),N=STORIES.length;
   $('dlfill').style.width=(n/N*100)+'%';
-  if(n===N){$('dlstat').textContent='All '+N+' stories are saved on this device.';$('dlgo').hidden=true;$('setupbtn').textContent='Saved for offline listening ✓'}
+  if(n===N){$('dlstat').textContent='All '+N+' stories are saved on this device.';$('dlgo').hidden=true}
   else{$('dlstat').textContent=n?n+' of '+N+' saved':'';$('dlgo').hidden=false;$('dlgo').textContent=n?'Carry on downloading':'Download all stories'}
   return n}
 async function dlAll(){if(dlBusy)return;dlBusy=true;$('dlgo').hidden=true;
@@ -277,7 +311,22 @@ async function dlAll(){if(dlBusy)return;dlBusy=true;$('dlgo').hidden=true;
   try{lock&&lock.release()}catch(e){}
   dlBusy=false;const n=await dlRefresh();
   if(n<N)$('dlstat').textContent=n+' of '+N+' saved. '+(fail?'Some did not download — check the connection and tap the button again.':'')}
-$('setupbtn').onclick=()=>{show('setup');dlRefresh()};$('dlback').onclick=()=>show('start');$('dlgo').onclick=dlAll;
+/* Where this is running decides what the start screen asks for. On an iPhone or iPad the stories must be saved inside the Home Screen app: Safari keeps its own separate storage. */
+const ENV={ios:/iPad|iPhone|iPod/.test(navigator.userAgent||'')||((navigator.platform||'')==='MacIntel'&&navigator.maxTouchPoints>1),
+  standalone:(navigator.standalone===true)||!!(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)};
+let needHome=ENV.ios&&!ENV.standalone;
+async function refreshStart(){const B=$('setupbtn'),N=$('setupnote'),L=$('setuplabel');
+  $('help1').hidden=ENV.standalone;
+  if(needHome){B.hidden=false;L.textContent='Add to Home Screen first';N.className='note';N.textContent='Then open it from the Home Screen and download the stories there.';return}
+  if(!('caches' in window)){B.hidden=true;N.textContent='';return}
+  const n=await countSaved(),T=STORIES.length;
+  if(n===T){B.hidden=true;N.className='note ok';N.textContent='✓ All '+T+' stories are saved on this device.'}
+  else{B.hidden=false;L.textContent=n?'Carry on downloading':'Download all stories';N.className='note';N.textContent=n?(n+' of '+T+' saved so far.'):'Do this once on Wi-Fi. Then they play without the internet.'}}
+let helpFrom='start';
+function openHelp(from){helpFrom=from;show('help')}
+$('help0').onclick=()=>openHelp('lock');$('help1').onclick=()=>openHelp('start');$('helpok').onclick=()=>show(helpFrom);
+$('setupbtn').onclick=()=>{if(needHome){openHelp('start');return}show('setup');dlRefresh().then(n=>{if(n<STORIES.length)dlAll()})};
+$('dlback').onclick=()=>{show('start');refreshStart()};$('dlgo').onclick=dlAll;
 
 function tick(){
   const S=$('seek');
@@ -305,7 +354,7 @@ au.addEventListener('timeupdate',()=>{if(!ready)return;tick();const t=au.current
 au.addEventListener('play',()=>{setIcon();if(ready&&Math.abs(au.playbackRate-rateNow())>.001)applyRate()});au.addEventListener('pause',()=>{setIcon();if(ready){st.t=au.currentTime||0;save()}});
 au.addEventListener('ended',()=>{if(!ready)return;st.done[STORIES[st.i].id]=1;save();nextStory(true)});
 $('play').onclick=toggle;$('b30').onclick=back30;$('nst').onclick=()=>nextStory(false);$('pst').onclick=prevStory;
-$('aa').onclick=()=>{st.fs=(st.fs+1)%SIZES.length;save();applySize()};
+$('aminus').onclick=()=>{if(st.tz>0){st.tz--;save();applySize()}};$('aplus').onclick=()=>{if(st.tz<SIZES.length-1){st.tz++;save();applySize()}};
 $('slower').onclick=()=>{if(st.sp>-SP_MAX){st.sp--;save();applyRate()}};$('faster').onclick=()=>{if(st.sp<SP_MAX){st.sp++;save();applyRate()}};
 if('mediaSession' in navigator){const ms=navigator.mediaSession,h=(a,f)=>{try{ms.setActionHandler(a,f)}catch(e){}};
   h('play',()=>au.play());h('pause',()=>au.pause());h('seekbackward',back30);h('previoustrack',prevStory);h('nexttrack',()=>nextStory(false))}
@@ -318,7 +367,7 @@ function buildRows(){const R=$('rows');let part=null;
     b.children[1].textContent=s.t;b.children[2].textContent=mins(s.d);
     b.onclick=()=>{show('player');if(i!==st.i)load(i,0,true);else if(ready&&au.paused)au.play().catch(()=>{})};R.appendChild(b)})}
 function markRows(){document.querySelectorAll('.row').forEach(b=>{const i=+b.dataset.i;b.classList.toggle('on',i===st.i);b.firstChild.textContent=st.done[STORIES[i].id]?'✓':''})}
-function show(id){['lock','start','player','list','setup'].forEach(x=>$(x).hidden=x!==id);
+function show(id){['lock','start','player','list','setup','help'].forEach(x=>$(x).hidden=x!==id);
   if(id==='list'){markRows();const on=document.querySelector('.row.on');if(on)on.scrollIntoView({block:'center'})}}
 $('open').onclick=()=>show('list');$('close').onclick=()=>show('player');
 
@@ -333,7 +382,7 @@ async function init(idx){
   $('golabel').textContent=resuming?'Keep listening':'Play';
   $('gosub').textContent=resuming?STORIES[st.i].t:'';
   $('rows').textContent='';buildRows();
-  if(!('caches' in window)){$('setupbtn').hidden=true}else{countSaved().then(n=>{if(n===STORIES.length)$('setupbtn').textContent='Saved for offline listening ✓'})}
+  refreshStart();
   show('start');
 }
 $('go').onclick=()=>{unlock();show('player');load(st.i,st.t,true)};
@@ -349,7 +398,7 @@ $('lockform').onsubmit=async e=>{e.preventDefault();
   $('lockmsg').textContent='';$('pw').value='';init(idx)};
 async function boot(){let saved=null;try{saved=localStorage.getItem(KS)}catch(e){}
   if(saved&&window.crypto&&crypto.subtle){try{return init(await openIndex(b64(saved)))}catch(e){KEYOBJ=null}}
-  show('lock')}
+  $('locknote').hidden=!needHome;show('lock')}
 document.addEventListener('keydown',e=>{if($('player').hidden)return;if(e.key===' '){e.preventDefault();toggle()}else if(e.key==='ArrowLeft')back30();else if(e.key==='ArrowRight')nextStory(false)});
 window.addEventListener('resize',applySize);
 applySize();applyRate();boot();
