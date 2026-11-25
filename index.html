@@ -402,7 +402,12 @@ async function boot(){let saved=null;try{saved=localStorage.getItem(KS)}catch(e)
 document.addEventListener('keydown',e=>{if($('player').hidden)return;if(e.key===' '){e.preventDefault();toggle()}else if(e.key==='ArrowLeft')back30();else if(e.key==='ArrowRight')nextStory(false)});
 window.addEventListener('resize',applySize);
 applySize();applyRate();boot();
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+if('serviceWorker' in navigator){
+  /* When a new version of the app has been fetched, show it straight away, but never while a story is on screen. */
+  const had=!!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{let done=null;try{done=sessionStorage.getItem('pop.reloaded')}catch(e){}
+    if(had&&!done&&$('player').hidden&&$('list').hidden&&$('setup').hidden){try{sessionStorage.setItem('pop.reloaded','1')}catch(e){}location.reload()}});
+  navigator.serviceWorker.register('sw.js').catch(()=>{})}
 </script>
 </body>
 </html>
