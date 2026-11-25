@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
 <style>
-:root{--paper:#F5F1E8;--ink:#1c1a18;--wine:#6b2a31;--muted:#7a7468;--line:#ddd6c6;--fs:36px;--ahead:#6d675c}
+:root{--paper:#F5F1E8;--ink:#1c1a18;--wine:#6b2a31;--muted:#7a7468;--line:#ddd6c6;--fs:28px;--ahead:#6d675c}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0}
 body{background:var(--paper);color:var(--ink);font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
@@ -50,12 +50,14 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 #head{padding:18px 22px 6px;text-align:center}
 #part{color:var(--muted);font-size:15px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #title{font-size:27px;font-weight:700;color:var(--wine);margin-top:6px;line-height:1.15}
-#read{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:6px 24px;overflow:hidden}
-#cur{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-weight:600;font-size:var(--fs);
-  line-height:1.42;letter-spacing:.01em;word-spacing:.08em;text-align:left;color:var(--ahead)}
-#cur span{border-radius:.18em;padding:.04em .1em;margin:0 -.1em}
-#cur .said{color:var(--ink)}
-#cur .now{color:#fff;background:var(--wine)}
+#read{flex:1;min-height:0;position:relative;overflow:hidden;padding:0 28px;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 24%,#000 62%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 24%,#000 62%,transparent 100%)}
+#cur{position:relative;margin:0;font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-weight:400;font-size:var(--fs);
+  line-height:1.62;text-align:left;color:#bdb5a6;transition:transform 1.1s cubic-bezier(.3,.1,.3,1);will-change:transform}
+#cur span{transition:color 1.1s ease}
+#cur .now{color:var(--ink)}
+#cur .ttl{display:block;font-size:.72em;letter-spacing:.14em;margin-bottom:.9em}
+@media (prefers-reduced-motion:reduce){#cur,#cur span{transition-duration:.2s}}
 #bar{margin:0 14px;height:52px;display:flex;align-items:center}
 #seek{-webkit-appearance:none;appearance:none;width:100%;height:52px;margin:0;background:transparent;touch-action:none}
 #seek::-webkit-slider-runnable-track{height:12px;border-radius:6px;background:linear-gradient(to right,var(--wine) var(--pct,0%),var(--line) var(--pct,0%))}
@@ -91,7 +93,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .row.on .n{color:var(--wine);font-weight:700}
 #listfoot{padding:10px 18px 14px;border-top:1px solid var(--line)}
 #listfoot button{width:100%;min-height:68px;border-radius:14px;background:var(--wine);color:#fff;font-size:24px}
-@media (min-width:700px){:root{--fs:48px}#title{font-size:36px}#read{padding:10px 8vw}.row{font-size:28px;min-height:84px}
+@media (min-width:700px){:root{--fs:37px}#title{font-size:36px}#read{padding:10px 8vw}.row{font-size:28px;min-height:84px}
   .c .r{width:92px;height:92px}#play .r{width:124px;height:124px}.c{font-size:17px}#ctl{padding:18px 10vw 8px}#foot,#listfoot{padding-left:10vw;padding-right:10vw}}
 
 </style>
@@ -154,8 +156,8 @@ try{Object.assign(st,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
 const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=String(s%60).padStart(2,'0');return h?h+':'+String(m).padStart(2,'0')+':'+x:m+':'+x};
 const mins=s=>{const m=Math.max(1,Math.round(s/60));return m<60?m+' min':Math.floor(m/60)+' hr '+(m%60?m%60+' min':'')};
-const SIZES=[30,36,42,50], MAXW=[12,10,8,6], RATES=[1,.95,.9,.85];
-function applySize(){const big=window.innerWidth>=700?1.33:1;document.documentElement.style.setProperty('--fs',Math.round(SIZES[st.fs]*big)+'px');rechunk()}
+const SIZES=[24,28,34,42], RATES=[1,.95,.9,.85];
+function applySize(){const big=window.innerWidth>=700?1.33:1;document.documentElement.style.setProperty('--fs',Math.round(SIZES[st.fs]*big)+'px');if(chunks.length){setTimeout(()=>place(ci),60)}}
 if(!(st.fs>=0&&st.fs<SIZES.length))st.fs=1;
 if(RATES.indexOf(st.rate)<0)st.rate=1;
 function applyRate(){try{au.preservesPitch=true;au.webkitPreservesPitch=true}catch(e){}
@@ -169,30 +171,37 @@ function buildWords(){words=[];
     let total=0;for(const w of ws)total+=w.length+1;let acc=0;const dur=Math.max(.2,c[1]-c[0]);
     for(const w of ws){words.push([c[0]+dur*acc/total,w]);acc+=w.length+1}}
   rechunk()}
-function rechunk(){chunks=[];ci=-1;wi=-1;if(!words.length)return;
-  const max=MAXW[st.fs]||10,soft=Math.max(3,Math.round(max*.5));let a=0;
+/* Group the words into sentences and lay the whole story out as one flowing page. */
+function rechunk(){chunks=[];ci=-1;wi=-1;const P=$('cur');if(!words.length)return;
+  let a=0;const END=/[.!?]["')\]]*$/, ABBR=/^(Mr|Mrs|Ms|Dr|St|No)\.$/;
   for(let k=0;k<words.length;k++){const w=words[k][1],n=k-a+1,last=k===words.length-1;
-    const end=/[.!?]["')\]]*$/.test(w)&&!/^(Mr|Mrs|Ms|Dr|St|No)\.$/.test(w), clause=/[,;:]["')]*$|[–—]$/.test(w);
-    if(last||end||(clause&&n>=soft)||n>=max){chunks.push([a,k]);a=k+1}}
-  /* avoid a one-word tail left over from a hard cap */
-  for(let j=chunks.length-1;j>0;j--){const c=chunks[j],p=chunks[j-1];if(c[1]===c[0]&&p[1]-p[0]+1<=max&&!/[.!?]["')\]]*$/.test(words[p[1]][1])){p[1]=c[1];chunks.splice(j,1)}}
-  $('cur').textContent='';if(ready)tick()}
+    const end=END.test(w)&&!ABBR.test(w), clause=/[,;:]["')]*$|[–—]$/.test(w);
+    if(last||end||(clause&&n>=28)||n>=40){chunks.push([a,k]);a=k+1}}
+  P.textContent='';
+  chunks.forEach((c,j)=>{const s=document.createElement('span');const t=words.slice(c[0],c[1]+1).map(w=>w[1]).join(' ');
+    s.textContent=t;if(j===0&&t.length<70&&t===t.toUpperCase())s.className='ttl';P.appendChild(s);P.appendChild(document.createTextNode(' '))});
+  place(-1);if(ready)tick()}
+function place(k){const P=$('cur'),R=$('read'),H=R.clientHeight||0;let y=H*.4;
+  if(k>=0){const s=P.querySelectorAll('span')[k];if(s){y=H*.4-(s.offsetTop+Math.min(s.offsetHeight||0,H*.3)/2)}}
+  P.style.transform='translateY('+Math.round(y)+'px)'}
 function paint(t){if(!chunks.length)return;
   let lo=0,hi=words.length-1,w=0;while(lo<=hi){const m=(lo+hi)>>1;if(words[m][0]<=t){w=m;lo=m+1}else hi=m-1}
   if(w===wi)return;wi=w;
   lo=0;hi=chunks.length-1;let k=0;while(lo<=hi){const m=(lo+hi)>>1;if(chunks[m][0]<=w){k=m;lo=m+1}else hi=m-1}
-  const P=$('cur'),c=chunks[k];
-  if(k!==ci){ci=k;P.textContent='';for(let j=c[0];j<=c[1];j++){const s=document.createElement('span');s.textContent=words[j][1];P.appendChild(s);if(j<c[1])P.appendChild(document.createTextNode(' '))}}
-  const sp=P.querySelectorAll('span');for(let j=0;j<sp.length;j++){const g=c[0]+j;sp[j].className=g<w?'said':g===w?'now':''}}
+  if(k===ci)return;
+  const sp=$('cur').querySelectorAll('span');
+  if(ci>=0&&sp[ci])sp[ci].classList.remove('now');
+  if(sp[k])sp[k].classList.add('now');
+  ci=k;place(k)}
 
 function load(i,t,autoplay){
   st.i=i;st.t=t||0;save();
   const s=STORIES[i];
   $('title').textContent=s.t;$('part').textContent=s.p;
-  $('cur').textContent='Loading…';ci=-1;wi=-1;cues=[];words=[];chunks=[];cuesFor=-1;
+  $('cur').textContent='';$('cur').style.transform='translateY('+Math.round(($('read').clientHeight||0)*.4)+'px)';ci=-1;wi=-1;cues=[];words=[];chunks=[];cuesFor=-1;
   wantPlay=!!autoplay;
   const myLoad=++loadSeq;ready=false;
-  srcFor(s.id).then(u=>{ if(myLoad!==loadSeq)return; setSrc(u,myLoad); }).catch(()=>{ if(myLoad===loadSeq&&!words.length)$('cur').textContent='This story could not be loaded. Check the connection and try again.'; });
+  srcFor(s.id).then(u=>{ if(myLoad!==loadSeq)return; setSrc(u,myLoad); }).catch(()=>{ if(myLoad===loadSeq&&!words.length){const P=$('cur');P.textContent='';const s=document.createElement('span');s.className='now';s.textContent='This story could not be loaded. Check the connection and try again.';P.appendChild(s)} });
   getText(s.id).then(c=>{if(st.i===i){cues=c;cuesFor=i;buildWords();tick()}}).catch(()=>{});
   if('mediaSession' in navigator){try{navigator.mediaSession.metadata=new MediaMetadata({title:s.t,artist:META.author,album:META.title,artwork:[{src:'icon-512.png',sizes:'512x512',type:'image/png'}]})}catch(e){}}
   markRows();
