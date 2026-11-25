@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Stories</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Pop's Stories">
+<meta name="theme-color" content="#F5F1E8">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+:root{--paper:#F5F1E8;--ink:#1c1a18;--wine:#6b2a31;--muted:#7a7468;--line:#ddd6c6;--fs:36px;--ahead:#6d675c}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  overflow:hidden;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+[hidden]{display:none!important}
+
+/* start */
+#start{align-items:center;justify-content:center;gap:28px;padding:24px}
+#start img{max-height:58vh;max-width:78vw;border-radius:4px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.big{background:var(--wine);color:#fff;border-radius:999px;min-height:84px;padding:0 44px;font-size:30px;letter-spacing:.02em;
+  display:flex;align-items:center;gap:16px}
+.big svg{width:34px;height:34px;fill:#fff}
+#lock{align-items:center;justify-content:center;padding:28px}
+#lockform{display:flex;flex-direction:column;align-items:stretch;gap:18px;width:min(86vw,440px)}
+#lockform label{font-size:22px;color:var(--muted)}
+#pw{font:inherit;font-family:-apple-system,system-ui,sans-serif;font-size:24px;padding:16px 18px;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);-webkit-user-select:text;user-select:text}
+#lockform .big{justify-content:center}
+#lockmsg{min-height:2.8em;font-family:-apple-system,system-ui,sans-serif;font-size:19px;color:var(--wine);text-align:center}
+#setupbtn{color:var(--muted);font-size:18px;text-decoration:underline;min-height:48px;padding:0 16px}
+#setup{align-items:center;justify-content:center;gap:22px;padding:28px;text-align:center}
+#setup h2{margin:0;font-size:30px;color:var(--wine)}
+#setup p{margin:0;font-size:21px;line-height:1.4;max-width:30em}
+#dlbar{width:min(84vw,520px);height:16px;background:var(--line);border-radius:8px;overflow:hidden}
+#dlfill{height:100%;width:0;background:var(--wine)}
+#dlstat{font-family:-apple-system,system-ui,sans-serif;font-size:19px;color:var(--muted);min-height:1.4em}
+.plain{min-height:60px;padding:0 28px;border:2px solid var(--line);border-radius:14px;font-size:21px;background:#fbf8f1}
+#start .sub{color:var(--muted);font-size:20px;font-style:italic;text-align:center;min-height:1.3em;padding:0 12px}
+
+/* player */
+#head{padding:18px 22px 6px;text-align:center}
+#part{color:var(--muted);font-size:15px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#title{font-size:27px;font-weight:700;color:var(--wine);margin-top:6px;line-height:1.15}
+#read{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:6px 24px;overflow:hidden}
+#cur{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-weight:600;font-size:var(--fs);
+  line-height:1.42;letter-spacing:.01em;word-spacing:.08em;text-align:left;color:var(--ahead)}
+#cur span{border-radius:.18em;padding:.04em .1em;margin:0 -.1em}
+#cur .said{color:var(--ink)}
+#cur .now{color:#fff;background:var(--wine)}
+#bar{margin:0 14px;height:52px;display:flex;align-items:center}
+#seek{-webkit-appearance:none;appearance:none;width:100%;height:52px;margin:0;background:transparent;touch-action:none}
+#seek::-webkit-slider-runnable-track{height:12px;border-radius:6px;background:linear-gradient(to right,var(--wine) var(--pct,0%),var(--line) var(--pct,0%))}
+#seek::-moz-range-track{height:12px;border-radius:6px;background:var(--line)}
+#seek::-webkit-slider-thumb{-webkit-appearance:none;width:38px;height:38px;margin-top:-13px;border-radius:50%;background:var(--wine);border:4px solid var(--paper);box-shadow:0 1px 5px rgba(0,0,0,.35)}
+#seek::-moz-range-thumb{width:32px;height:32px;border-radius:50%;background:var(--wine);border:4px solid var(--paper)}
+#times{display:flex;justify-content:space-between;margin:0 22px;color:var(--muted);font-size:17px;font-variant-numeric:tabular-nums;font-family:-apple-system,system-ui,sans-serif}
+#ctl{display:grid;grid-template-columns:1fr 1fr 1.25fr 1fr;align-items:end;justify-items:center;gap:4px;padding:14px 10px 6px}
+.c{display:flex;flex-direction:column;align-items:center;gap:6px;font-family:-apple-system,system-ui,sans-serif;font-size:14px;color:var(--muted);width:100%}
+.c .r{width:74px;height:74px;border-radius:50%;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center}
+.c svg{width:34px;height:34px;fill:var(--ink)}
+.c:active .r{background:var(--line)}
+#play .r{width:100px;height:100px;background:var(--wine);border-color:var(--wine)}
+#play svg{width:46px;height:46px;fill:#fff}
+#play:active .r{background:#4f1e24}
+#foot{display:flex;gap:12px;padding:10px 18px 14px}
+#foot button{flex:1;min-height:60px;border:2px solid var(--line);border-radius:14px;font-size:21px;background:#fbf8f1}
+#foot button:active{background:var(--line)}
+#aa{flex:0 0 72px!important}
+#spd{flex:0 0 132px!important;font-family:-apple-system,system-ui,sans-serif;font-size:19px!important}
+
+/* list */
+#list{background:var(--paper)}
+#rows{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 8px}
+.ph{position:sticky;top:0;background:var(--paper);color:var(--muted);font-size:15px;letter-spacing:.08em;text-transform:uppercase;
+  padding:16px 22px 8px;border-bottom:1px solid var(--line)}
+.row{display:flex;align-items:center;gap:14px;width:100%;min-height:72px;padding:10px 22px;text-align:left;border-bottom:1px solid var(--line);font-size:24px;line-height:1.2}
+.row:active{background:var(--line)}
+.row .n{flex:1}
+.row .d{color:var(--muted);font-size:16px;font-family:-apple-system,system-ui,sans-serif;white-space:nowrap}
+.row .k{width:22px;color:var(--wine);font-size:20px;text-align:center}
+.row.on{background:#ece5d6}
+.row.on .n{color:var(--wine);font-weight:700}
+#listfoot{padding:10px 18px 14px;border-top:1px solid var(--line)}
+#listfoot button{width:100%;min-height:68px;border-radius:14px;background:var(--wine);color:#fff;font-size:24px}
+@media (min-width:700px){:root{--fs:48px}#title{font-size:36px}#read{padding:10px 8vw}.row{font-size:28px;min-height:84px}
+  .c .r{width:92px;height:92px}#play .r{width:124px;height:124px}.c{font-size:17px}#ctl{padding:18px 10vw 8px}#foot,#listfoot{padding-left:10vw;padding-right:10vw}}
+
+</style>
+</head>
+<body>
+
+<section class="screen" id="lock" hidden>
+  <form id="lockform" autocomplete="off">
+    <label for="pw">Password</label>
+    <input id="pw" type="text" inputmode="text" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off" enterkeyhint="go">
+    <button class="big" type="submit">Open</button>
+    <div id="lockmsg"></div>
+  </form>
+</section>
+
+<section class="screen" id="start" hidden>
+  <img id="cover" alt="">
+  <button class="big" id="go"><svg viewBox="0 0 24 24"><path d="M7 4v16l14-8z"/></svg><span id="golabel">Play</span></button>
+  <div class="sub" id="gosub"></div>
+  <button id="setupbtn">Set up offline listening</button>
+</section>
+
+<section class="screen" id="setup" hidden>
+  <h2>Offline listening</h2>
+  <p id="dlmsg">This saves all 79 stories on this device (about 345&nbsp;MB) so they play without the internet. Use Wi-Fi and keep this screen open until it finishes.</p>
+  <div id="dlbar"><div id="dlfill"></div></div>
+  <div id="dlstat"></div>
+  <button class="big" id="dlgo">Download all stories</button>
+  <button class="plain" id="dlback">Back</button>
+</section>
+
+<section class="screen" id="player" hidden>
+  <div id="head"><div id="part"></div><div id="title"></div></div>
+  <div id="read" aria-live="off"><p id="cur"></p></div>
+  <div id="bar"><input id="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Position in the story"></div>
+  <div id="times"><span id="tc">0:00</span><span id="tr"></span></div>
+  <div id="ctl">
+    <button class="c" id="pst" aria-label="Previous story"><span class="r"><svg viewBox="0 0 24 24"><path d="M6 5h2.5v14H6zM20 5v14L9.5 12z"/></svg></span>Last story</button>
+    <button class="c" id="b30" aria-label="Back 30 seconds"><span class="r"><svg viewBox="0 0 24 24"><path d="M12 5V1.5L6.5 6 12 10.5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/><text x="12" y="16.3" font-size="6.4" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-weight="700">30</text></svg></span>Back 30</button>
+    <button class="c" id="play" aria-label="Play or pause"><span class="r"><svg viewBox="0 0 24 24"><path id="pi" d="M7 4v16l14-8z"/></svg></span><span id="pl">Play</span></button>
+    <button class="c" id="nst" aria-label="Next story"><span class="r"><svg viewBox="0 0 24 24"><path d="M15.500 5H18v14h-2.500zM4 5v14l10.500-7z"/></svg></span>Next story</button>
+  </div>
+  <div id="foot"><button id="open">All stories</button><button id="spd" aria-label="Reading speed">Speed 100%</button><button id="aa" aria-label="Text size">Aa</button></div>
+</section>
+
+<section class="screen" id="list" hidden>
+  <div id="rows"></div>
+  <div id="listfoot"><button id="close">Back to the story</button></div>
+</section>
+
+<audio id="au" preload="metadata" playsinline></audio>
+
+<script>
+let STORIES=[], META={title:"",author:""};
+const $=id=>document.getElementById(id), au=$('au');
+const KEY='pop.stories.v1';
+let st={i:0,t:0,done:{},fs:1,rate:1}, cues=[], ci=-1, cuesFor=-1, wantPlay=false;
+let words=[], chunks=[], wi=-1, seeking=false;
+try{Object.assign(st,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=String(s%60).padStart(2,'0');return h?h+':'+String(m).padStart(2,'0')+':'+x:m+':'+x};
+const mins=s=>{const m=Math.max(1,Math.round(s/60));return m<60?m+' min':Math.floor(m/60)+' hr '+(m%60?m%60+' min':'')};
+const SIZES=[30,36,42,50], MAXW=[12,10,8,6], RATES=[1,.95,.9,.85];
+function applySize(){const big=window.innerWidth>=700?1.33:1;document.documentElement.style.setProperty('--fs',Math.round(SIZES[st.fs]*big)+'px');rechunk()}
+if(!(st.fs>=0&&st.fs<SIZES.length))st.fs=1;
+if(RATES.indexOf(st.rate)<0)st.rate=1;
+function applyRate(){try{au.preservesPitch=true;au.webkitPreservesPitch=true}catch(e){}
+  try{au.defaultPlaybackRate=st.rate;au.playbackRate=st.rate}catch(e){}
+  $('spd').textContent='Speed '+Math.round(st.rate*100)+'%'}
+/* The subtitle lines break wherever 80 characters ran out. Rebuild them as short phrases that end where a sentence or clause ends,
+   and give every word an estimated time inside its line so the word being spoken can be marked. */
+function buildWords(){words=[];
+  for(const c of cues){const toks=c[2].split(/\s+/).filter(Boolean);if(!toks.length)continue;
+    const ws=[];for(const t of toks){if(ws.length&&!/[A-Za-z0-9]/.test(t))ws[ws.length-1]+=' '+t;else ws.push(t)}
+    let total=0;for(const w of ws)total+=w.length+1;let acc=0;const dur=Math.max(.2,c[1]-c[0]);
+    for(const w of ws){words.push([c[0]+dur*acc/total,w]);acc+=w.length+1}}
+  rechunk()}
+function rechunk(){chunks=[];ci=-1;wi=-1;if(!words.length)return;
+  const max=MAXW[st.fs]||10,soft=Math.max(3,Math.round(max*.5));let a=0;
+  for(let k=0;k<words.length;k++){const w=words[k][1],n=k-a+1,last=k===words.length-1;
+    const end=/[.!?]["')\]]*$/.test(w)&&!/^(Mr|Mrs|Ms|Dr|St|No)\.$/.test(w), clause=/[,;:]["')]*$|[–—]$/.test(w);
+    if(last||end||(clause&&n>=soft)||n>=max){chunks.push([a,k]);a=k+1}}
+  /* avoid a one-word tail left over from a hard cap */
+  for(let j=chunks.length-1;j>0;j--){const c=chunks[j],p=chunks[j-1];if(c[1]===c[0]&&p[1]-p[0]+1<=max&&!/[.!?]["')\]]*$/.test(words[p[1]][1])){p[1]=c[1];chunks.splice(j,1)}}
+  $('cur').textContent='';if(ready)tick()}
+function paint(t){if(!chunks.length)return;
+  let lo=0,hi=words.length-1,w=0;while(lo<=hi){const m=(lo+hi)>>1;if(words[m][0]<=t){w=m;lo=m+1}else hi=m-1}
+  if(w===wi)return;wi=w;
+  lo=0;hi=chunks.length-1;let k=0;while(lo<=hi){const m=(lo+hi)>>1;if(chunks[m][0]<=w){k=m;lo=m+1}else hi=m-1}
+  const P=$('cur'),c=chunks[k];
+  if(k!==ci){ci=k;P.textContent='';for(let j=c[0];j<=c[1];j++){const s=document.createElement('span');s.textContent=words[j][1];P.appendChild(s);if(j<c[1])P.appendChild(document.createTextNode(' '))}}
+  const sp=P.querySelectorAll('span');for(let j=0;j<sp.length;j++){const g=c[0]+j;sp[j].className=g<w?'said':g===w?'now':''}}
+
+function load(i,t,autoplay){
+  st.i=i;st.t=t||0;save();
+  const s=STORIES[i];
+  $('title').textContent=s.t;$('part').textContent=s.p;
+  $('cur').textContent='Loading…';ci=-1;wi=-1;cues=[];words=[];chunks=[];cuesFor=-1;
+  wantPlay=!!autoplay;
+  const myLoad=++loadSeq;ready=false;
+  srcFor(s.id).then(u=>{ if(myLoad!==loadSeq)return; setSrc(u,myLoad); }).catch(()=>{ if(myLoad===loadSeq&&!words.length)$('cur').textContent='This story could not be loaded. Check the connection and try again.'; });
+  getText(s.id).then(c=>{if(st.i===i){cues=c;cuesFor=i;buildWords();tick()}}).catch(()=>{});
+  if('mediaSession' in navigator){try{navigator.mediaSession.metadata=new MediaMetadata({title:s.t,artist:META.author,album:META.title,artwork:[{src:'icon-512.png',sizes:'512x512',type:'image/png'}]})}catch(e){}}
+  markRows();
+}
+let loadSeq=0, blobUrl=null, ready=false, unlocked=false;
+const SILENT='data:audio/wav;base64,UklGRvQHAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YdAHAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==';
+/* iOS only lets audio start from a tap. Playing a moment of silence inside the tap keeps the element allowed to play after the story has been read from storage. */
+function unlock(){if(unlocked)return;unlocked=true;try{ready=false;au.src=SILENT;const p=au.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
+const MEDIA='ps2-media-v1', KS='pop.key.v1';
+const aurl=id=>'d/a'+id+'.bin', turl=id=>'d/t'+id+'.bin';
+async function cached(u){try{const c=await caches.open(MEDIA);return await c.match(u)}catch(e){return null}}
+/* Everything under d/ is AES-GCM encrypted: 12 bytes of IV, then ciphertext. The key comes from the password and is kept on this device after the first unlock. */
+let KEYOBJ=null;
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function deriveRaw(pass,salt,n){const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveBits']);
+  return new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt,iterations:n},km,256))}
+async function useRaw(raw){KEYOBJ=await crypto.subtle.importKey('raw',raw,'AES-GCM',false,['decrypt'])}
+async function dec(buf){const u=new Uint8Array(buf);return crypto.subtle.decrypt({name:'AES-GCM',iv:u.subarray(0,12)},KEYOBJ,u.subarray(12))}
+async function getBytes(u,keep){const r=await cached(u);if(r)return r.arrayBuffer();
+  const n=await fetch(u);if(!n.ok)throw new Error('net');
+  if(keep){try{const c=await caches.open(MEDIA);await c.put(u,n.clone())}catch(e){}}
+  return n.arrayBuffer()}
+async function srcFor(id){return URL.createObjectURL(new Blob([await dec(await getBytes(aurl(id)))],{type:'audio/mp4'}))}
+function setSrc(u,token){
+  const old=blobUrl;blobUrl=u.startsWith('blob:')?u:null;
+  const f=()=>{ if(token!==loadSeq||au.src.startsWith('data:'))return; au.removeEventListener('loadedmetadata',f);
+    if(st.t>1&&st.t<au.duration-3){try{au.currentTime=st.t}catch(e){}}
+    ready=true; applyRate(); if(wantPlay){const p=au.play();if(p&&p.catch)p.catch(()=>{})} tick(); setIcon() };
+  au.addEventListener('loadedmetadata',f);
+  au.src=u;au.load();
+  if(old){setTimeout(()=>{try{URL.revokeObjectURL(old)}catch(e){}},1000)}
+}
+async function getText(id){return JSON.parse(new TextDecoder().decode(await dec(await getBytes(turl(id)))))}
+
+/* offline download */
+let dlBusy=false;
+async function countSaved(){let n=0;try{const c=await caches.open(MEDIA);const keys=await c.keys();const have=new Set(keys.map(k=>new URL(k.url).pathname.split('/').slice(-2).join('/')));
+  for(const s of STORIES)if(have.has(aurl(s.id))&&have.has(turl(s.id)))n++}catch(e){}return n}
+async function dlRefresh(){const n=await countSaved(),N=STORIES.length;
+  $('dlfill').style.width=(n/N*100)+'%';
+  if(n===N){$('dlstat').textContent='All '+N+' stories are saved on this device.';$('dlgo').hidden=true;$('setupbtn').textContent='Saved for offline listening ✓'}
+  else{$('dlstat').textContent=n?n+' of '+N+' saved':'';$('dlgo').hidden=false;$('dlgo').textContent=n?'Carry on downloading':'Download all stories'}
+  return n}
+async function dlAll(){if(dlBusy)return;dlBusy=true;$('dlgo').hidden=true;
+  let lock=null;try{lock=await navigator.wakeLock.request('screen')}catch(e){}
+  try{if(navigator.storage&&navigator.storage.persist)await navigator.storage.persist()}catch(e){}
+  const N=STORIES.length;let fail=0;
+  try{const c=await caches.open(MEDIA);
+    for(let i=0;i<N;i++){const s=STORIES[i];
+      for(const u of [turl(s.id),aurl(s.id)]){
+        if(await c.match(u))continue;
+        try{const r=await fetch(u,{cache:'no-store'});if(!r.ok||r.status!==200)throw 0;await c.put(u,r)}
+        catch(e){fail++}
+      }
+      $('dlfill').style.width=((i+1)/N*100)+'%';$('dlstat').textContent='Saving '+(i+1)+' of '+N+' — '+s.t;
+    }
+  }catch(e){fail++}
+  try{lock&&lock.release()}catch(e){}
+  dlBusy=false;const n=await dlRefresh();
+  if(n<N)$('dlstat').textContent=n+' of '+N+' saved. '+(fail?'Some did not download — check the connection and tap the button again.':'')}
+$('setupbtn').onclick=()=>{show('setup');dlRefresh()};$('dlback').onclick=()=>show('start');$('dlgo').onclick=dlAll;
+
+function tick(){
+  const S=$('seek');
+  if(!ready){if(!seeking){S.value=0;S.style.setProperty('--pct','0%')}$('tc').textContent=fmt(st.t);$('tr').textContent='';return}
+  const t=au.currentTime||0,d=au.duration||STORIES[st.i].d;
+  if(!seeking){const p=d?Math.min(1,t/d):0;S.value=Math.round(p*1000);S.style.setProperty('--pct',(p*100)+'%');
+    $('tc').textContent=fmt(t);$('tr').textContent='−'+fmt(d-t)}
+  if(cuesFor!==st.i||!words.length)return;
+  paint(t);
+}
+/* progress slider: drag to move through the story */
+(function(){const S=$('seek');
+  const dur=()=>au.duration||STORIES[st.i].d;
+  S.addEventListener('input',()=>{seeking=true;const p=S.value/1000;S.style.setProperty('--pct',(p*100)+'%');$('tc').textContent=fmt(p*dur());$('tr').textContent='−'+fmt((1-p)*dur())});
+  const commit=()=>{if(!seeking)return;seeking=false;if(!ready)return;const d=dur();try{au.currentTime=Math.min(Math.max(0,d-1),S.value/1000*d)}catch(e){}st.t=au.currentTime||0;save();tick()};
+  S.addEventListener('change',commit);S.addEventListener('touchend',()=>setTimeout(commit,0));S.addEventListener('pointerup',()=>setTimeout(commit,0));
+})();
+function setIcon(){const p=ready?!au.paused:wantPlay;$('pi').setAttribute('d',p?'M6 4h4.500v16H6zM13.500 4H18v16h-4.500z':'M7 4v16l14-8z');$('pl').textContent=p?'Pause':'Play'}
+function toggle(){if(!ready){wantPlay=!wantPlay;setIcon();return}if(au.paused){au.play().catch(()=>{})}else au.pause()}
+function back30(){if(!ready)return;au.currentTime=Math.max(0,(au.currentTime||0)-30);tick()}
+function nextStory(auto){if(st.i<STORIES.length-1)load(st.i+1,0,true);else if(auto){au.pause()}}
+function prevStory(){if(ready&&(au.currentTime||0)>8){au.currentTime=0;tick()}else if(st.i>0)load(st.i-1,0,ready?!au.paused:wantPlay);else{au.currentTime=0;tick()}}
+
+au.addEventListener('timeupdate',()=>{if(!ready)return;tick();const t=au.currentTime||0;if(Math.abs(t-st.t)>4){st.t=t;save()}});
+au.addEventListener('play',()=>{setIcon();if(ready&&Math.abs(au.playbackRate-st.rate)>.001)applyRate()});au.addEventListener('pause',()=>{setIcon();if(ready){st.t=au.currentTime||0;save()}});
+au.addEventListener('ended',()=>{if(!ready)return;st.done[STORIES[st.i].id]=1;save();nextStory(true)});
+$('play').onclick=toggle;$('b30').onclick=back30;$('nst').onclick=()=>nextStory(false);$('pst').onclick=prevStory;
+$('aa').onclick=()=>{st.fs=(st.fs+1)%SIZES.length;save();applySize()};
+$('spd').onclick=()=>{st.rate=RATES[(RATES.indexOf(st.rate)+1)%RATES.length];save();applyRate()};
+if('mediaSession' in navigator){const ms=navigator.mediaSession,h=(a,f)=>{try{ms.setActionHandler(a,f)}catch(e){}};
+  h('play',()=>au.play());h('pause',()=>au.pause());h('seekbackward',back30);h('previoustrack',prevStory);h('nexttrack',()=>nextStory(false))}
+
+/* list */
+function buildRows(){const R=$('rows');let part=null;
+  STORIES.forEach((s,i)=>{if(s.p!==part){part=s.p;const h=document.createElement('div');h.className='ph';h.textContent=part;R.appendChild(h)}
+    const b=document.createElement('button');b.className='row';b.dataset.i=i;
+    b.innerHTML='<span class="k"></span><span class="n"></span><span class="d"></span>';
+    b.children[1].textContent=s.t;b.children[2].textContent=mins(s.d);
+    b.onclick=()=>{show('player');if(i!==st.i)load(i,0,true);else if(ready&&au.paused)au.play().catch(()=>{})};R.appendChild(b)})}
+function markRows(){document.querySelectorAll('.row').forEach(b=>{const i=+b.dataset.i;b.classList.toggle('on',i===st.i);b.firstChild.textContent=st.done[STORIES[i].id]?'✓':''})}
+function show(id){['lock','start','player','list','setup'].forEach(x=>$(x).hidden=x!==id);
+  if(id==='list'){markRows();const on=document.querySelector('.row.on');if(on)on.scrollIntoView({block:'center'})}}
+$('open').onclick=()=>show('list');$('close').onclick=()=>show('player');
+
+/* unlock, then start */
+async function openIndex(raw){await useRaw(raw);return JSON.parse(new TextDecoder().decode(await dec(await getBytes('d/i.bin',true))))}
+async function init(idx){
+  META=idx;STORIES=idx.stories;
+  if(!(st.i>=0&&st.i<STORIES.length)){st.i=0;st.t=0}
+  try{document.title=idx.title}catch(e){}
+  getBytes('d/c.bin',true).then(dec).then(b=>{$('cover').src=URL.createObjectURL(new Blob([b],{type:'image/jpeg'}));$('cover').alt=idx.title+', by '+idx.author}).catch(()=>{});
+  const resuming=st.t>5||st.i>0;
+  $('golabel').textContent=resuming?'Keep listening':'Play';
+  $('gosub').textContent=resuming?STORIES[st.i].t:'';
+  $('rows').textContent='';buildRows();
+  if(!('caches' in window)){$('setupbtn').hidden=true}else{countSaved().then(n=>{if(n===STORIES.length)$('setupbtn').textContent='Saved for offline listening ✓'})}
+  show('start');
+}
+$('go').onclick=()=>{unlock();show('player');load(st.i,st.t,true)};
+$('lockform').onsubmit=async e=>{e.preventDefault();
+  const p=$('pw').value.trim().toLowerCase().replace(/\s+/g,' ');if(!p)return;
+  if(!(window.crypto&&crypto.subtle)){$('lockmsg').textContent='Open this page from its https address.';return}
+  $('lockmsg').textContent='Opening…';
+  let kp;try{const r=await fetch('k.json',{cache:'no-store'});if(!r.ok)throw 0;kp=await r.json()}catch(err){$('lockmsg').textContent='No connection. Try again on Wi-Fi.';return}
+  let raw,idx;
+  try{raw=await deriveRaw(p,b64(kp.s),kp.n)}catch(err){$('lockmsg').textContent='Something went wrong. Try again.';return}
+  try{idx=await openIndex(raw)}catch(err){KEYOBJ=null;$('lockmsg').textContent=(err&&err.message==='net')?'No connection. Try again on Wi-Fi.':'That password did not work. Check it and try again.';return}
+  try{localStorage.setItem(KS,btoa(String.fromCharCode.apply(null,raw)))}catch(err){}
+  $('lockmsg').textContent='';$('pw').value='';init(idx)};
+async function boot(){let saved=null;try{saved=localStorage.getItem(KS)}catch(e){}
+  if(saved&&window.crypto&&crypto.subtle){try{return init(await openIndex(b64(saved)))}catch(e){KEYOBJ=null}}
+  show('lock')}
+document.addEventListener('keydown',e=>{if($('player').hidden)return;if(e.key===' '){e.preventDefault();toggle()}else if(e.key==='ArrowLeft')back30();else if(e.key==='ArrowRight')nextStory(false)});
+window.addEventListener('resize',applySize);
+applySize();applyRate();boot();
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+</script>
+</body>
+</html>
