@@ -55,7 +55,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 #start .sub{font-family:var(--hand);color:var(--muted);font-size:22px;text-align:center;min-height:1.3em;padding:0 12px}
 
 /* start-screen setup helpers */
-.big.alt{background:rgba(246,236,212,.75);min-height:72px;font-size:26px}
+.big{max-width:92vw}
+.big.alt{background:rgba(246,236,212,.75);min-height:72px;font-size:24px;padding:0 22px}
 .note{font-family:-apple-system,system-ui,sans-serif;font-size:17px;font-weight:600;color:var(--muted);text-align:center;max-width:22em;line-height:1.35;margin-top:-12px}
 .note.ok{color:var(--ink);font-size:19px}
 .helpbtn{font-family:var(--hand);font-size:20px;color:var(--ink);min-height:50px;padding:0 18px;border:2.5px solid var(--ink);border-radius:var(--wob);background:rgba(246,236,212,.55);
@@ -159,7 +160,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   <img id="cover" alt="">
   <button class="big" id="go"><svg viewBox="0 0 24 24"><path d="M7 4v16l14-8z"/></svg><span id="golabel">Play</span></button>
   <div class="sub" id="gosub"></div>
-  <button class="big alt" id="setupbtn"><svg viewBox="0 0 24 24"><path d="M11 3h2v9.200l3.300-3.300 1.400 1.400L12 16l-5.700-5.700 1.400-1.400 3.300 3.300zM5 19h14v2H5z"/></svg><span id="setuplabel">Download all stories</span></button>
+  <button class="big alt" id="setupbtn"><svg viewBox="0 0 24 24"><path id="setupicon" d="M11 3h2v9.200l3.300-3.300 1.400 1.400L12 16l-5.700-5.700 1.400-1.400 3.300 3.300zM5 19h14v2H5z"/></svg><span id="setuplabel">Download all stories</span></button>
   <div class="note" id="setupnote"></div>
   <button class="helpbtn" id="help1"><b>?</b>How to add to the Home Screen</button>
 </section>
@@ -317,7 +318,7 @@ const ENV={ios:/iPad|iPhone|iPod/.test(navigator.userAgent||'')||((navigator.pla
 let needHome=ENV.ios&&!ENV.standalone;
 async function refreshStart(){const B=$('setupbtn'),N=$('setupnote'),L=$('setuplabel');
   $('help1').hidden=ENV.standalone;
-  if(needHome){B.hidden=false;L.textContent='Add to Home Screen first';N.className='note';N.textContent='Then open it from the Home Screen and download the stories there.';return}
+  if(needHome){B.hidden=false;L.textContent='Add to Home Screen';N.className='note';N.textContent='Do that first. Then open it from the Home Screen and download the stories there.';return}
   if(!('caches' in window)){B.hidden=true;N.textContent='';return}
   const n=await countSaved(),T=STORIES.length;
   if(n===T){B.hidden=true;N.className='note ok';N.textContent='✓ All '+T+' stories are saved on this device.'}
