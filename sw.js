@@ -1,4 +1,4 @@
-const SHELL_V='ps2-shell-v2';
+const SHELL_V='ps2-shell-v3';
 const SHELL=['./','index.html','k.json','icon-180.png','icon-192.png','icon-512.png','manifest.json'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(SHELL_V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x.startsWith('ps2-shell-')&&x!==SHELL_V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});

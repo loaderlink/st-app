@@ -8,94 +8,119 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Pop's Stories">
-<meta name="theme-color" content="#F5F1E8">
+<meta name="theme-color" content="#dcb980">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
 <style>
-:root{--paper:#F5F1E8;--ink:#1c1a18;--wine:#6b2a31;--muted:#7a7468;--line:#ddd6c6;--fs:28px;--ahead:#6d675c}
+:root{--ink:#26221d;--red:#b5271d;--yellow:#f2bd1d;--muted:#5a4a33;--line:rgba(38,34,29,.30);--faint:rgba(38,34,29,.30);--fs:28px;
+  --hand:"Marker Felt","Noteworthy","Bradley Hand","Segoe Print",cursive;
+  --wob:255px 18px 225px 18px/18px 225px 18px 255px}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0}
-body{background:var(--paper);color:var(--ink);font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-  overflow:hidden;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+body{color:var(--ink);font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  overflow:hidden;-webkit-user-select:none;user-select:none;touch-action:manipulation;
+  background-color:#dcb980;
+  background-image:
+    repeating-linear-gradient(1deg,rgba(110,70,25,.11) 0 2px,transparent 2px 11px,rgba(110,70,25,.07) 11px 12px,transparent 12px 27px),
+    repeating-linear-gradient(179.3deg,rgba(255,240,205,.16) 0 3px,transparent 3px 37px),
+    repeating-linear-gradient(0.4deg,rgba(90,55,20,.05) 0 1px,transparent 1px 5px),
+    linear-gradient(180deg,#e6c890,#d5af72)}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
 .screen{position:fixed;inset:0;display:flex;flex-direction:column;
   padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 [hidden]{display:none!important}
 
-/* start */
-#start{align-items:center;justify-content:center;gap:28px;padding:24px}
-#start img{max-height:58vh;max-width:78vw;border-radius:4px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
-.big{background:var(--wine);color:#fff;border-radius:999px;min-height:84px;padding:0 44px;font-size:30px;letter-spacing:.02em;
-  display:flex;align-items:center;gap:16px}
-.big svg{width:34px;height:34px;fill:#fff}
+/* start, lock, setup */
+#start{align-items:center;justify-content:center;gap:26px;padding:24px}
+#start img{max-height:56vh;max-width:76vw;border:3px solid var(--ink);border-radius:3px;box-shadow:5px 7px 0 rgba(38,34,29,.22)}
+.big{background:var(--yellow);color:var(--ink);border:3px solid var(--ink);border-radius:var(--wob);min-height:84px;padding:0 44px;
+  font-family:var(--hand);font-size:32px;letter-spacing:.02em;display:flex;align-items:center;gap:16px;box-shadow:3px 4px 0 rgba(38,34,29,.25)}
+.big svg{width:34px;height:34px;fill:var(--ink)}
+.big:active{transform:translate(2px,3px);box-shadow:1px 1px 0 rgba(38,34,29,.25)}
 #lock{align-items:center;justify-content:center;padding:28px}
 #lockform{display:flex;flex-direction:column;align-items:stretch;gap:18px;width:min(86vw,440px)}
-#lockform label{font-size:22px;color:var(--muted)}
-#pw{font:inherit;font-family:-apple-system,system-ui,sans-serif;font-size:24px;padding:16px 18px;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);-webkit-user-select:text;user-select:text}
+#lockform label{font-family:var(--hand);font-size:26px;color:var(--ink)}
+#pw{font:inherit;font-family:-apple-system,system-ui,sans-serif;font-size:24px;padding:16px 18px;border:3px solid var(--ink);border-radius:6px;background:#f6ecd4;color:var(--ink);-webkit-user-select:text;user-select:text}
 #lockform .big{justify-content:center}
-#lockmsg{min-height:2.8em;font-family:-apple-system,system-ui,sans-serif;font-size:19px;color:var(--wine);text-align:center}
-#setupbtn{color:var(--muted);font-size:18px;text-decoration:underline;min-height:48px;padding:0 16px}
+#lockmsg{min-height:2.8em;font-family:-apple-system,system-ui,sans-serif;font-size:19px;font-weight:600;color:var(--red);text-align:center}
+#setupbtn{font-family:var(--hand);color:var(--muted);font-size:20px;text-decoration:underline;min-height:48px;padding:0 16px}
 #setup{align-items:center;justify-content:center;gap:22px;padding:28px;text-align:center}
-#setup h2{margin:0;font-size:30px;color:var(--wine)}
+#setup h2{margin:0;font-family:var(--hand);font-size:34px;font-weight:400;color:var(--ink)}
 #setup p{margin:0;font-size:21px;line-height:1.4;max-width:30em}
-#dlbar{width:min(84vw,520px);height:16px;background:var(--line);border-radius:8px;overflow:hidden}
-#dlfill{height:100%;width:0;background:var(--wine)}
+#dlbar{width:min(84vw,520px);height:20px;background:#f6ecd4;border:2.5px solid var(--ink);border-radius:3px;overflow:hidden}
+#dlfill{height:100%;width:0;background:var(--yellow);border-right:2.5px solid var(--ink)}
 #dlstat{font-family:-apple-system,system-ui,sans-serif;font-size:19px;color:var(--muted);min-height:1.4em}
-.plain{min-height:60px;padding:0 28px;border:2px solid var(--line);border-radius:14px;font-size:21px;background:#fbf8f1}
-#start .sub{color:var(--muted);font-size:20px;font-style:italic;text-align:center;min-height:1.3em;padding:0 12px}
+.plain{min-height:60px;padding:0 28px;border:2.5px solid var(--ink);border-radius:var(--wob);font-family:var(--hand);font-size:23px}
+#start .sub{font-family:var(--hand);color:var(--muted);font-size:22px;text-align:center;min-height:1.3em;padding:0 12px}
 
 /* player */
-#head{padding:18px 22px 6px;text-align:center}
-#part{color:var(--muted);font-size:15px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#title{font-size:27px;font-weight:700;color:var(--wine);margin-top:6px;line-height:1.15}
+#head{padding:16px 22px 4px;text-align:center}
+#part{font-family:-apple-system,system-ui,sans-serif;font-weight:600;color:var(--muted);font-size:13px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#title{font-family:var(--hand);font-size:31px;font-weight:400;color:var(--ink);margin:4px auto 0;line-height:1.12;display:inline-block;padding:0 6px 3px;
+  border-bottom:3px solid var(--ink);border-radius:0 0 60% 40%/0 0 6px 9px}
 #read{flex:1;min-height:0;position:relative;overflow:hidden;padding:0 28px;
   -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 24%,#000 62%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 24%,#000 62%,transparent 100%)}
 #cur{position:relative;margin:0;font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-weight:400;font-size:var(--fs);
-  line-height:1.62;text-align:left;color:#bdb5a6;transition:transform 1.1s cubic-bezier(.3,.1,.3,1);will-change:transform}
+  line-height:1.62;text-align:left;color:var(--faint);transition:transform 1.1s cubic-bezier(.3,.1,.3,1);will-change:transform}
 #cur span{transition:color 1.1s ease}
 #cur .now{color:var(--ink)}
-#cur .ttl{display:block;font-size:.72em;letter-spacing:.14em;margin-bottom:.9em}
+#cur .ttl{display:block;font-family:var(--hand);font-size:.8em;letter-spacing:.08em;margin-bottom:.8em}
+#cur .par::before{content:"";display:block;height:.7em}
 @media (prefers-reduced-motion:reduce){#cur,#cur span{transition-duration:.2s}}
-#bar{margin:0 14px;height:52px;display:flex;align-items:center}
-#seek{-webkit-appearance:none;appearance:none;width:100%;height:52px;margin:0;background:transparent;touch-action:none}
-#seek::-webkit-slider-runnable-track{height:12px;border-radius:6px;background:linear-gradient(to right,var(--wine) var(--pct,0%),var(--line) var(--pct,0%))}
-#seek::-moz-range-track{height:12px;border-radius:6px;background:var(--line)}
-#seek::-webkit-slider-thumb{-webkit-appearance:none;width:38px;height:38px;margin-top:-13px;border-radius:50%;background:var(--wine);border:4px solid var(--paper);box-shadow:0 1px 5px rgba(0,0,0,.35)}
-#seek::-moz-range-thumb{width:32px;height:32px;border-radius:50%;background:var(--wine);border:4px solid var(--paper)}
-#times{display:flex;justify-content:space-between;margin:0 22px;color:var(--muted);font-size:17px;font-variant-numeric:tabular-nums;font-family:-apple-system,system-ui,sans-serif}
-#ctl{display:grid;grid-template-columns:1fr 1fr 1.25fr 1fr;align-items:end;justify-items:center;gap:4px;padding:14px 10px 6px}
-.c{display:flex;flex-direction:column;align-items:center;gap:6px;font-family:-apple-system,system-ui,sans-serif;font-size:14px;color:var(--muted);width:100%}
-.c .r{width:74px;height:74px;border-radius:50%;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center}
+
+/* progress: a tape measure, with a red pencil as the marker */
+#bar{margin:0 16px;height:56px;display:flex;align-items:center}
+#seek{-webkit-appearance:none;appearance:none;width:100%;height:56px;margin:0;background:transparent;touch-action:none}
+#seek::-webkit-slider-runnable-track{height:20px;border:2.5px solid var(--ink);border-radius:3px;background:
+  linear-gradient(to right,rgba(38,34,29,.30) var(--pct,0%),transparent var(--pct,0%)),
+  repeating-linear-gradient(90deg,rgba(38,34,29,.85) 0 2px,transparent 2px 10%),
+  repeating-linear-gradient(90deg,rgba(38,34,29,.45) 0 1px,transparent 1px 2%),
+  var(--yellow)}
+#seek::-moz-range-track{height:16px;border:2.5px solid var(--ink);border-radius:3px;background:var(--yellow)}
+#seek::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:50px;margin-top:-18px;border-radius:5px 5px 9px 9px;border:2.5px solid var(--ink);
+  background:linear-gradient(90deg,#8f1d15 0 22%,var(--red) 22% 78%,#8f1d15 78%);box-shadow:2px 3px 0 rgba(38,34,29,.28)}
+#seek::-moz-range-thumb{width:20px;height:44px;border-radius:5px;border:2.5px solid var(--ink);background:var(--red)}
+#times{display:flex;justify-content:space-between;margin:-2px 22px 0;color:var(--muted);font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;font-family:-apple-system,system-ui,sans-serif}
+#ctl{display:grid;grid-template-columns:1fr 1fr 1.25fr 1fr;align-items:end;justify-items:center;gap:4px;padding:10px 10px 4px}
+.c{display:flex;flex-direction:column;align-items:center;gap:5px;font-family:var(--hand);font-size:16px;color:var(--muted);width:100%}
+.c .r{width:74px;height:74px;border-radius:50% 46% 52% 48%/48% 52% 46% 50%;border:3px solid var(--ink);display:flex;align-items:center;justify-content:center;background:rgba(246,236,212,.55)}
 .c svg{width:34px;height:34px;fill:var(--ink)}
-.c:active .r{background:var(--line)}
-#play .r{width:100px;height:100px;background:var(--wine);border-color:var(--wine)}
-#play svg{width:46px;height:46px;fill:#fff}
-#play:active .r{background:#4f1e24}
-#foot{display:flex;gap:12px;padding:10px 18px 14px}
-#foot button{flex:1;min-height:60px;border:2px solid var(--line);border-radius:14px;font-size:21px;background:#fbf8f1}
-#foot button:active{background:var(--line)}
-#aa{flex:0 0 72px!important}
-#spd{flex:0 0 132px!important;font-family:-apple-system,system-ui,sans-serif;font-size:19px!important}
+.c:active .r{background:rgba(38,34,29,.18)}
+#play .r{width:100px;height:100px;background:var(--yellow);border-width:3.5px;box-shadow:3px 4px 0 rgba(38,34,29,.25)}
+#play svg{width:46px;height:46px;fill:var(--ink)}
+#play:active .r{background:#d9a614}
+
+/* speed: slower / faster, with a rule that reads from the middle */
+#speed{display:flex;align-items:center;gap:12px;padding:8px 18px 0}
+#speed button{flex:0 0 104px;min-height:52px;border:2.5px solid var(--ink);border-radius:var(--wob);font-family:var(--hand);font-size:21px;background:rgba(246,236,212,.55)}
+#speed button:active{background:rgba(38,34,29,.18)}
+#speed button:disabled{opacity:.35}
+#gauge{flex:1;height:30px;display:flex;align-items:flex-end;border-bottom:2.5px solid var(--ink)}
+#gauge i{flex:1;height:9px;border-left:2px solid var(--ink);opacity:.4}
+#gauge i.mid{height:18px;opacity:.75}
+#gauge i.on{height:28px;border-left:6px solid var(--red);opacity:1}
+#foot{display:flex;gap:12px;padding:8px 18px 12px}
+#foot button{flex:1;min-height:56px;border:2.5px solid var(--ink);border-radius:var(--wob);font-family:var(--hand);font-size:23px;background:rgba(246,236,212,.55)}
+#foot button:active{background:rgba(38,34,29,.18)}
+#aa{flex:0 0 76px!important;font-family:Georgia,serif!important}
 
 /* list */
-#list{background:var(--paper)}
 #rows{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 8px}
-.ph{position:sticky;top:0;background:var(--paper);color:var(--muted);font-size:15px;letter-spacing:.08em;text-transform:uppercase;
-  padding:16px 22px 8px;border-bottom:1px solid var(--line)}
-.row{display:flex;align-items:center;gap:14px;width:100%;min-height:72px;padding:10px 22px;text-align:left;border-bottom:1px solid var(--line);font-size:24px;line-height:1.2}
-.row:active{background:var(--line)}
+.ph{position:sticky;top:0;background:#cfa769;color:var(--ink);font-family:-apple-system,system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  padding:14px 22px 8px;border-bottom:2.5px solid var(--ink)}
+.row{display:flex;align-items:center;gap:14px;width:100%;min-height:72px;padding:10px 22px;text-align:left;border-bottom:1.5px solid var(--line);font-family:var(--hand);font-size:25px;line-height:1.2}
+.row:active{background:rgba(38,34,29,.14)}
 .row .n{flex:1}
-.row .d{color:var(--muted);font-size:16px;font-family:-apple-system,system-ui,sans-serif;white-space:nowrap}
-.row .k{width:22px;color:var(--wine);font-size:20px;text-align:center}
-.row.on{background:#ece5d6}
-.row.on .n{color:var(--wine);font-weight:700}
-#listfoot{padding:10px 18px 14px;border-top:1px solid var(--line)}
-#listfoot button{width:100%;min-height:68px;border-radius:14px;background:var(--wine);color:#fff;font-size:24px}
-@media (min-width:700px){:root{--fs:37px}#title{font-size:36px}#read{padding:10px 8vw}.row{font-size:28px;min-height:84px}
-  .c .r{width:92px;height:92px}#play .r{width:124px;height:124px}.c{font-size:17px}#ctl{padding:18px 10vw 8px}#foot,#listfoot{padding-left:10vw;padding-right:10vw}}
-
+.row .d{color:var(--muted);font-size:15px;font-weight:600;font-family:-apple-system,system-ui,sans-serif;white-space:nowrap}
+.row .k{width:22px;color:var(--red);font-size:22px;text-align:center;font-family:-apple-system,system-ui,sans-serif;font-weight:700}
+.row.on{background:rgba(242,189,29,.55)}
+#listfoot{padding:10px 18px 14px;border-top:2.5px solid var(--ink)}
+#listfoot button{width:100%;min-height:68px;border:3px solid var(--ink);border-radius:var(--wob);background:var(--yellow);color:var(--ink);font-family:var(--hand);font-size:26px}
+@media (min-width:700px){:root{--fs:37px}#title{font-size:42px}#read{padding:10px 8vw}.row{font-size:30px;min-height:84px}
+  .c .r{width:92px;height:92px}#play .r{width:124px;height:124px}.c{font-size:19px}#ctl{padding:14px 10vw 6px}#foot,#listfoot,#speed{padding-left:10vw;padding-right:10vw}#bar{margin:0 calc(10vw - 2px)}#times{margin-left:10vw;margin-right:10vw}}
+@media (max-height:640px){#ctl{padding-top:4px}.c .r{width:62px;height:62px}#play .r{width:84px;height:84px}#speed button{min-height:44px}#foot button{min-height:46px}#bar{height:46px}}
 </style>
 </head>
 <body>
@@ -136,7 +161,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     <button class="c" id="play" aria-label="Play or pause"><span class="r"><svg viewBox="0 0 24 24"><path id="pi" d="M7 4v16l14-8z"/></svg></span><span id="pl">Play</span></button>
     <button class="c" id="nst" aria-label="Next story"><span class="r"><svg viewBox="0 0 24 24"><path d="M15.500 5H18v14h-2.500zM4 5v14l10.500-7z"/></svg></span>Next story</button>
   </div>
-  <div id="foot"><button id="open">All stories</button><button id="spd" aria-label="Reading speed">Speed 100%</button><button id="aa" aria-label="Text size">Aa</button></div>
+  <div id="speed"><button id="slower" aria-label="Read slower">Slower</button><div id="gauge" aria-hidden="true"></div><button id="faster" aria-label="Read faster">Faster</button></div>
+  <div id="foot"><button id="open">All stories</button><button id="aa" aria-label="Text size">Aa</button></div>
 </section>
 
 <section class="screen" id="list" hidden>
@@ -150,44 +176,33 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 let STORIES=[], META={title:"",author:""};
 const $=id=>document.getElementById(id), au=$('au');
 const KEY='pop.stories.v1';
-let st={i:0,t:0,done:{},fs:1,rate:1}, cues=[], ci=-1, cuesFor=-1, wantPlay=false;
+let st={i:0,t:0,done:{},fs:1,sp:0}, cues=[], ci=-1, cuesFor=-1, wantPlay=false;
 let words=[], chunks=[], wi=-1, seeking=false;
 try{Object.assign(st,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
 const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=String(s%60).padStart(2,'0');return h?h+':'+String(m).padStart(2,'0')+':'+x:m+':'+x};
 const mins=s=>{const m=Math.max(1,Math.round(s/60));return m<60?m+' min':Math.floor(m/60)+' hr '+(m%60?m%60+' min':'')};
-const SIZES=[24,28,34,42], RATES=[1,.95,.9,.85];
-function applySize(){const big=window.innerWidth>=700?1.33:1;document.documentElement.style.setProperty('--fs',Math.round(SIZES[st.fs]*big)+'px');if(chunks.length){setTimeout(()=>place(ci),60)}}
+const SIZES=[24,28,34,42], SP_MID=.9, SP_STEP=.025, SP_MAX=6;
+function applySize(){const big=window.innerWidth>=700?1.33:1;document.documentElement.style.setProperty('--fs',Math.round(SIZES[st.fs]*big)+'px');if(words.length){setTimeout(()=>place(ci),60)}}
 if(!(st.fs>=0&&st.fs<SIZES.length))st.fs=1;
-if(RATES.indexOf(st.rate)<0)st.rate=1;
-function applyRate(){try{au.preservesPitch=true;au.webkitPreservesPitch=true}catch(e){}
-  try{au.defaultPlaybackRate=st.rate;au.playbackRate=st.rate}catch(e){}
-  $('spd').textContent='Speed '+Math.round(st.rate*100)+'%'}
-/* The subtitle lines break wherever 80 characters ran out. Rebuild them as short phrases that end where a sentence or clause ends,
-   and give every word an estimated time inside its line so the word being spoken can be marked. */
-function buildWords(){words=[];
-  for(const c of cues){const toks=c[2].split(/\s+/).filter(Boolean);if(!toks.length)continue;
-    const ws=[];for(const t of toks){if(ws.length&&!/[A-Za-z0-9]/.test(t))ws[ws.length-1]+=' '+t;else ws.push(t)}
-    let total=0;for(const w of ws)total+=w.length+1;let acc=0;const dur=Math.max(.2,c[1]-c[0]);
-    for(const w of ws){words.push([c[0]+dur*acc/total,w]);acc+=w.length+1}}
-  rechunk()}
-/* Group the words into sentences and lay the whole story out as one flowing page. */
-function rechunk(){chunks=[];ci=-1;wi=-1;const P=$('cur');if(!words.length)return;
-  let a=0;const END=/[.!?]["')\]]*$/, ABBR=/^(Mr|Mrs|Ms|Dr|St|No)\.$/;
-  for(let k=0;k<words.length;k++){const w=words[k][1],n=k-a+1,last=k===words.length-1;
-    const end=END.test(w)&&!ABBR.test(w), clause=/[,;:]["')]*$|[–—]$/.test(w);
-    if(last||end||(clause&&n>=28)||n>=40){chunks.push([a,k]);a=k+1}}
-  P.textContent='';
-  chunks.forEach((c,j)=>{const s=document.createElement('span');const t=words.slice(c[0],c[1]+1).map(w=>w[1]).join(' ');
-    s.textContent=t;if(j===0&&t.length<70&&t===t.toUpperCase())s.className='ttl';P.appendChild(s);P.appendChild(document.createTextNode(' '))});
+if(!(Number.isInteger(st.sp)&&Math.abs(st.sp)<=SP_MAX))st.sp=0;
+/* The middle of the rule is the normal reading pace (a touch under the narration's own speed). */
+const rateNow=()=>Math.round((SP_MID+st.sp*SP_STEP)*1000)/1000;
+function applyRate(){const r=rateNow();try{au.preservesPitch=true;au.webkitPreservesPitch=true}catch(e){}
+  try{au.defaultPlaybackRate=r;au.playbackRate=r}catch(e){}
+  const G=$('gauge');if(!G.children||!G.children.length){for(let k=-SP_MAX;k<=SP_MAX;k++){const t=document.createElement('i');if(k===0)t.className='mid';G.appendChild(t)}}
+  for(let k=0;k<G.children.length;k++){const base=(k===SP_MAX)?'mid':'';G.children[k].className=(k===st.sp+SP_MAX)?(base+' on').trim():base}
+  $('slower').disabled=st.sp<=-SP_MAX;$('faster').disabled=st.sp>=SP_MAX}
+/* Each story's text arrives as sentences: [start seconds, text, kind] where kind 1 is the title and 2 starts a paragraph. */
+function render(){const P=$('cur');ci=-1;P.textContent='';
+  words.forEach((s,j)=>{const e=document.createElement('span');e.textContent=s[1];if(s[2]===1)e.className='ttl';else if(s[2]===2&&j>0)e.className='par';
+    P.appendChild(e);P.appendChild(document.createTextNode(' '))});
   place(-1);if(ready)tick()}
 function place(k){const P=$('cur'),R=$('read'),H=R.clientHeight||0;let y=H*.4;
   if(k>=0){const s=P.querySelectorAll('span')[k];if(s){y=H*.4-(s.offsetTop+Math.min(s.offsetHeight||0,H*.3)/2)}}
   P.style.transform='translateY('+Math.round(y)+'px)'}
-function paint(t){if(!chunks.length)return;
-  let lo=0,hi=words.length-1,w=0;while(lo<=hi){const m=(lo+hi)>>1;if(words[m][0]<=t){w=m;lo=m+1}else hi=m-1}
-  if(w===wi)return;wi=w;
-  lo=0;hi=chunks.length-1;let k=0;while(lo<=hi){const m=(lo+hi)>>1;if(chunks[m][0]<=w){k=m;lo=m+1}else hi=m-1}
+function paint(t){if(!words.length)return;
+  let lo=0,hi=words.length-1,k=0;while(lo<=hi){const m=(lo+hi)>>1;if(words[m][0]<=t){k=m;lo=m+1}else hi=m-1}
   if(k===ci)return;
   const sp=$('cur').querySelectorAll('span');
   if(ci>=0&&sp[ci])sp[ci].classList.remove('now');
@@ -202,7 +217,7 @@ function load(i,t,autoplay){
   wantPlay=!!autoplay;
   const myLoad=++loadSeq;ready=false;
   srcFor(s.id).then(u=>{ if(myLoad!==loadSeq)return; setSrc(u,myLoad); }).catch(()=>{ if(myLoad===loadSeq&&!words.length){const P=$('cur');P.textContent='';const s=document.createElement('span');s.className='now';s.textContent='This story could not be loaded. Check the connection and try again.';P.appendChild(s)} });
-  getText(s.id).then(c=>{if(st.i===i){cues=c;cuesFor=i;buildWords();tick()}}).catch(()=>{});
+  getText(s.id).then(c=>{if(st.i===i){words=c;cuesFor=i;render();tick()}}).catch(()=>{});
   if('mediaSession' in navigator){try{navigator.mediaSession.metadata=new MediaMetadata({title:s.t,artist:META.author,album:META.title,artwork:[{src:'icon-512.png',sizes:'512x512',type:'image/png'}]})}catch(e){}}
   markRows();
 }
@@ -211,7 +226,7 @@ const SILENT='data:audio/wav;base64,UklGRvQHAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAAB
 /* iOS only lets audio start from a tap. Playing a moment of silence inside the tap keeps the element allowed to play after the story has been read from storage. */
 function unlock(){if(unlocked)return;unlocked=true;try{ready=false;au.src=SILENT;const p=au.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
 const MEDIA='ps2-media-v1', KS='pop.key.v1';
-const aurl=id=>'d/a'+id+'.bin', turl=id=>'d/t'+id+'.bin';
+const aurl=id=>'d/a'+id+'.bin', turl=id=>'d/s'+id+'.bin';
 async function cached(u){try{const c=await caches.open(MEDIA);return await c.match(u)}catch(e){return null}}
 /* Everything under d/ is AES-GCM encrypted: 12 bytes of IV, then ciphertext. The key comes from the password and is kept on this device after the first unlock. */
 let KEYOBJ=null;
@@ -287,11 +302,11 @@ function nextStory(auto){if(st.i<STORIES.length-1)load(st.i+1,0,true);else if(au
 function prevStory(){if(ready&&(au.currentTime||0)>8){au.currentTime=0;tick()}else if(st.i>0)load(st.i-1,0,ready?!au.paused:wantPlay);else{au.currentTime=0;tick()}}
 
 au.addEventListener('timeupdate',()=>{if(!ready)return;tick();const t=au.currentTime||0;if(Math.abs(t-st.t)>4){st.t=t;save()}});
-au.addEventListener('play',()=>{setIcon();if(ready&&Math.abs(au.playbackRate-st.rate)>.001)applyRate()});au.addEventListener('pause',()=>{setIcon();if(ready){st.t=au.currentTime||0;save()}});
+au.addEventListener('play',()=>{setIcon();if(ready&&Math.abs(au.playbackRate-rateNow())>.001)applyRate()});au.addEventListener('pause',()=>{setIcon();if(ready){st.t=au.currentTime||0;save()}});
 au.addEventListener('ended',()=>{if(!ready)return;st.done[STORIES[st.i].id]=1;save();nextStory(true)});
 $('play').onclick=toggle;$('b30').onclick=back30;$('nst').onclick=()=>nextStory(false);$('pst').onclick=prevStory;
 $('aa').onclick=()=>{st.fs=(st.fs+1)%SIZES.length;save();applySize()};
-$('spd').onclick=()=>{st.rate=RATES[(RATES.indexOf(st.rate)+1)%RATES.length];save();applyRate()};
+$('slower').onclick=()=>{if(st.sp>-SP_MAX){st.sp--;save();applyRate()}};$('faster').onclick=()=>{if(st.sp<SP_MAX){st.sp++;save();applyRate()}};
 if('mediaSession' in navigator){const ms=navigator.mediaSession,h=(a,f)=>{try{ms.setActionHandler(a,f)}catch(e){}};
   h('play',()=>au.play());h('pause',()=>au.pause());h('seekbackward',back30);h('previoustrack',prevStory);h('nexttrack',()=>nextStory(false))}
 
