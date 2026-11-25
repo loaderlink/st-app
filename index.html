@@ -90,7 +90,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
 /* the whole book: a folding rule, one hinged length per part */
 #rule{position:relative;display:flex;margin:12px 16px 4px;height:32px}
-.seg{flex:1 0 34px;min-width:0;height:100%;position:relative;display:flex;align-items:flex-start;justify-content:center;padding-top:1px;
+.seg{flex:1 0 26px;min-width:0;height:100%;position:relative;display:flex;align-items:flex-start;justify-content:center;padding-top:1px;
   border:2.5px solid var(--ink);border-left-width:0;font-family:var(--hand);font-size:17px;line-height:1.1;color:var(--ink);
   background-color:#f1dfb4;background-image:repeating-linear-gradient(90deg,rgba(38,34,29,.55) 0 1.5px,transparent 1.5px 9px);background-size:100% 7px;background-repeat:no-repeat;background-position:left bottom}
 .seg:first-child{border-left-width:2.5px;border-radius:5px 0 0 5px}
@@ -348,7 +348,7 @@ function partLabel(name,k){const m=/^Part (\w+)/.exec(name),N={One:'1',Two:'2',T
   if(m)return N[m[1]]||m[1];if(/^Appendix/i.test(name))return 'A';return k===0?'0':String(k)}
 function buildRule(){const R=$('rule');R.textContent='';PARTS=[];let acc=0;
   STORIES.forEach((s,i)=>{let P=PARTS[PARTS.length-1];if(!P||P.name!==s.p){P={name:s.p,dur:0,start:acc};PARTS.push(P)}P.dur+=s.d;s._start=acc;s._part=PARTS.length-1;acc+=s.d});
-  PARTS.forEach((P,k)=>{const b=document.createElement('button');b.className='seg';b.style.flex=Math.max(1,Math.round(P.dur))+' 0 34px';b.textContent=partLabel(P.name,k);
+  PARTS.forEach((P,k)=>{const b=document.createElement('button');b.className='seg';b.style.flex=Math.max(1,Math.round(P.dur))+' 0 26px';b.textContent=partLabel(P.name,k);
     b.setAttribute('aria-label',P.name);b.onclick=()=>openListAt(k);R.appendChild(b);P.el=b});
   const m=document.createElement('div');m.id='rulemark';R.appendChild(m);ruleX=-1;ruleK=-1;ruleUpdate()}
 function ruleUpdate(){if(!PARTS.length)return;const s=STORIES[st.i];if(!s||s._part===undefined)return;const P=PARTS[s._part];
