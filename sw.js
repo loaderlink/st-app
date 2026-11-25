@@ -1,4 +1,4 @@
-const SHELL_V='ps2-shell-v10';
+const SHELL_V='ps2-shell-v11';
 const SHELL=['./','index.html','k.json','icon-180.png','icon-192.png','icon-512.png','manifest.json'];
 // Always fetch the app files fresh from the host (not from the browser's own 10-minute cache), so updates show up straight away.
 self.addEventListener('install',e=>{e.waitUntil(caches.open(SHELL_V).then(c=>Promise.all(SHELL.map(u=>fetch(new Request(u,{cache:'reload'})).then(r=>{if(!r.ok)throw new Error(u);return c.put(u,r)})))).then(()=>self.skipWaiting()))});

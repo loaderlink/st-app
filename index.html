@@ -153,7 +153,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 #listfoot button{width:100%;min-height:68px;border:3px solid var(--ink);border-radius:var(--wob);background:var(--yellow);color:var(--ink);font-family:var(--hand);font-size:26px}
 @media (min-width:700px){:root{--fs:37px}#title{font-size:42px}#read{padding:10px 8vw}.row{font-size:30px;min-height:84px}
   .c .r{width:92px;height:92px}#play .r{width:124px;height:124px}.c{font-size:19px}#ctl{padding:14px 10vw 6px}#foot,#listfoot,#speed{padding-left:10vw;padding-right:10vw}#rule{margin-left:10vw;margin-right:10vw;height:38px}.seg{font-size:21px}#bar{margin:0 calc(10vw - 2px)}#times{margin-left:10vw;margin-right:10vw}}
-@media (max-height:640px){#ctl{padding-top:4px}.c .r{width:62px;height:62px}#play .r{width:84px;height:84px}#speed button{min-height:44px}#foot button{min-height:46px}#bar{height:46px}}
+@media (max-height:700px){#ctl{padding-top:4px}.c .r{width:62px;height:62px}#play .r{width:84px;height:84px}#speed button{min-height:44px}#foot button{min-height:46px}#bar{height:46px}}
 </style>
 </head>
 <body>
@@ -274,7 +274,7 @@ const SILENT='data:audio/wav;base64,UklGRvQHAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAAB
 /* iOS only lets audio start from a tap. Playing a moment of silence inside the tap keeps the element allowed to play after the story has been read from storage. */
 function unlock(){if(unlocked)return;unlocked=true;try{ready=false;au.src=SILENT;const p=au.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
 const MEDIA='ps2-media-v1', KS='pop.key.v1';
-const aurl=id=>'d/a'+id+'.bin', turl=id=>'d/s'+id+'.bin';
+const aurl=id=>'d/b'+id+'.bin', turl=id=>'d/s'+id+'.bin';
 async function cached(u){try{const c=await caches.open(MEDIA);return await c.match(u)}catch(e){return null}}
 /* Everything under d/ is AES-GCM encrypted: 12 bytes of IV, then ciphertext. The key comes from the password and is kept on this device after the first unlock. */
 let KEYOBJ=null;
@@ -441,11 +441,12 @@ $('lockform').onsubmit=async e=>{e.preventDefault();
   try{idx=await openIndex(raw)}catch(err){KEYOBJ=null;$('lockmsg').textContent=(err&&err.message==='net')?'No connection. Try again on Wi-Fi.':'That password did not work. Check it and try again.';return}
   try{localStorage.setItem(KS,btoa(String.fromCharCode.apply(null,raw)))}catch(err){}
   $('lockmsg').textContent='';$('pw').value='';init(idx)};
-async function boot(){let saved=null;try{saved=localStorage.getItem(KS)}catch(e){}
+async function tidyCache(){try{const c=await caches.open(MEDIA);for(const k of await c.keys()){if(/\/d\/[at]\d+\.bin$/.test(new URL(k.url).pathname))await c.delete(k)}}catch(e){}}
+async function boot(){tidyCache();let saved=null;try{saved=localStorage.getItem(KS)}catch(e){}
   if(saved&&window.crypto&&crypto.subtle){try{return init(await openIndex(b64(saved)))}catch(e){KEYOBJ=null}}
   $('locknote').hidden=!needHome;show('lock')}
 document.addEventListener('keydown',e=>{if($('player').hidden)return;if(e.key===' '){e.preventDefault();toggle()}else if(e.key==='ArrowLeft')back30();else if(e.key==='ArrowRight')nextStory(false)});
-window.addEventListener('resize',applySize);
+window.addEventListener('resize',()=>{applySize();ruleX=-1;setTimeout(ruleUpdate,80)});
 applySize();applyRate();boot();
 if('serviceWorker' in navigator){
   /* When a new version of the app has been fetched, show it straight away, but never while a story is on screen. */
