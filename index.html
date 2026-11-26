@@ -53,7 +53,7 @@ button:disabled{opacity:.4}
 #start .sub{font-family:var(--hand);font-weight:700;color:var(--ink);font-size:23px;text-align:center;min-height:1.2em;padding:0 12px;margin-top:-4px}
 .note{font-family:-apple-system,system-ui,sans-serif;font-size:16px;font-weight:600;color:var(--muted);text-align:center;max-width:22em;line-height:1.35;margin-top:-6px}
 .note.ok{color:var(--ink);font-size:18px}
-.helpbtn{font-size:17px;min-height:48px;padding:0 16px;display:inline-flex;align-items:center;gap:10px;align-self:center}
+.helpbtn{font-size:15px;white-space:nowrap;min-height:48px;padding:0 14px;display:inline-flex;align-items:center;gap:10px;align-self:center}
 .helpbtn b{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#2a211a;color:#f6ecd4;font-family:-apple-system,system-ui,sans-serif;font-size:17px;text-shadow:none}
 #lock{align-items:center;justify-content:center;padding:28px}
 #lockform{display:flex;flex-direction:column;align-items:stretch;gap:18px;width:min(86vw,440px)}
@@ -505,7 +505,7 @@ function show(id){['lock','start','player','list','setup','help','album'].forEac
 $('open').onclick=()=>show('list');$('close').onclick=()=>show('player');
 
 /* unlock, then start */
-async function openIndex(raw){await useRaw(raw);return JSON.parse(new TextDecoder().decode(await dec(await getBytes('d/i2.bin',true))))}
+async function openIndex(raw){await useRaw(raw);return JSON.parse(new TextDecoder().decode(await dec(await getBytes('d/i3.bin',true))))}
 async function init(idx){
   META=idx;STORIES=idx.stories;PH=idx.photos&&idx.photos.n?idx.photos:{n:0,sections:[]};
   if(!(st.i>=0&&st.i<STORIES.length)){st.i=0;st.t=0}
@@ -529,7 +529,7 @@ $('lockform').onsubmit=async e=>{e.preventDefault();
   try{idx=await openIndex(raw)}catch(err){KEYOBJ=null;$('lockmsg').textContent=(err&&err.message==='net')?'No connection. Try again on Wi-Fi.':'That password did not work. Check it and try again.';return}
   try{localStorage.setItem(KS,btoa(String.fromCharCode.apply(null,raw)))}catch(err){}
   $('lockmsg').textContent='';$('pw').value='';init(idx)};
-async function tidyCache(){try{const c=await caches.open(MEDIA);for(const k of await c.keys()){if(/\/d\/([at]\d+|i)\.bin$/.test(new URL(k.url).pathname))await c.delete(k)}}catch(e){}}
+async function tidyCache(){try{const c=await caches.open(MEDIA);for(const k of await c.keys()){if(/\/d\/([at]\d+|i|i2)\.bin$/.test(new URL(k.url).pathname))await c.delete(k)}}catch(e){}}
 async function boot(){tidyCache();let saved=null;try{saved=localStorage.getItem(KS)}catch(e){}
   if(saved&&window.crypto&&crypto.subtle){try{return init(await openIndex(b64(saved)))}catch(e){KEYOBJ=null}}
   $('locknote').hidden=!needHome;show('lock')}
