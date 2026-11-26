@@ -8,152 +8,196 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Pop's Stories">
-<meta name="theme-color" content="#dcb980">
+<meta name="theme-color" content="#d9bf94">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
 <style>
-:root{--ink:#26221d;--red:#b5271d;--yellow:#f2bd1d;--muted:#5a4a33;--line:rgba(38,34,29,.30);--faint:rgba(38,34,29,.38);--fs:28px;
-  --hand:"Marker Felt","Noteworthy","Bradley Hand","Segoe Print",cursive;
-  --wob:255px 18px 225px 18px/18px 225px 18px 255px}
+:root{--ink:#2b2622;--red:#c22a1e;--yellow:#f4c21f;--muted:#5d4a35;--faint:rgba(43,38,34,.36);--fs:28px;
+  --stamp:"Avenir Next Condensed","DIN Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --hand:"Bradley Hand","Noteworthy","Segoe Print",cursive;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0}
-body{color:var(--ink);font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-  overflow:hidden;-webkit-user-select:none;user-select:none;touch-action:manipulation;
-  background-color:#dcb980;
-  background-image:
-    repeating-linear-gradient(1deg,rgba(110,70,25,.11) 0 2px,transparent 2px 11px,rgba(110,70,25,.07) 11px 12px,transparent 12px 27px),
-    repeating-linear-gradient(179.3deg,rgba(255,240,205,.16) 0 3px,transparent 3px 37px),
-    repeating-linear-gradient(0.4deg,rgba(90,55,20,.05) 0 1px,transparent 1px 5px),
-    linear-gradient(180deg,#e6c890,#d5af72)}
+body{color:var(--ink);font-family:var(--serif);overflow:hidden;-webkit-user-select:none;user-select:none;touch-action:manipulation;
+  background:#d9bf94 url(wood.jpg);background-size:620px auto}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
 .screen{position:fixed;inset:0;display:flex;flex-direction:column;
   padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 [hidden]{display:none!important}
 
-/* start, lock, setup */
-#start{align-items:center;justify-content:center;gap:20px;padding:20px}
-#start img{max-height:38vh;max-width:70vw;border:3px solid var(--ink);border-radius:3px;box-shadow:5px 7px 0 rgba(38,34,29,.22)}
-.big{background:var(--yellow);color:var(--ink);border:3px solid var(--ink);border-radius:var(--wob);min-height:84px;padding:0 30px;
-  font-family:var(--hand);font-size:30px;letter-spacing:.02em;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:14px;box-shadow:3px 4px 0 rgba(38,34,29,.25)}
-.big svg{width:34px;height:34px;fill:var(--ink)}
-.big:active{transform:translate(2px,3px);box-shadow:1px 1px 0 rgba(38,34,29,.25)}
+/* a block of lighter timber sitting on the bench */
+.wood,.big.alt,.plain,.helpbtn,#speed button,#foot button,#phbar button,.chip{
+  background:linear-gradient(rgba(255,250,235,.42),rgba(255,246,225,.20)),url(wood.jpg);background-size:auto,440px auto;background-position:0 0,38% 61%;
+  border:1px solid rgba(70,45,20,.55);border-radius:5px;color:#2a211a;text-shadow:0 1px 0 rgba(255,255,255,.4);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -2px 3px rgba(90,55,20,.18),0 3px 5px rgba(40,25,10,.36),0 1px 1px rgba(40,25,10,.4)}
+.wood:active,.big.alt:active,.plain:active,.helpbtn:active,#speed button:active,#foot button:active,#phbar button:active,.chip:active{
+  transform:translateY(2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 2px 5px rgba(60,35,10,.3),0 1px 1px rgba(40,25,10,.4)}
+button:disabled{opacity:.4}
+.lbl,.big,.plain,.helpbtn,#speed button,#foot button,#phbar button,.chip{font-family:var(--stamp);font-weight:700;text-transform:uppercase;letter-spacing:.07em}
+
+/* the main action: enamelled yellow, like a tape-measure case */
+.big{min-height:78px;padding:0 28px;max-width:92vw;font-size:26px;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:14px;color:#1f1b16;
+  background:linear-gradient(#ffe57a,#f6c927 42%,#dfa70f);border:2px solid #2b2b2b;border-radius:8px;text-shadow:0 1px 0 rgba(255,255,255,.45);
+  box-shadow:inset 0 2px 1px rgba(255,255,255,.65),inset 0 -4px 6px rgba(120,80,0,.3),0 5px 9px rgba(30,20,10,.42),0 1px 2px rgba(30,20,10,.5)}
+.big svg{width:30px;height:30px;fill:#1f1b16}
+.big:active{transform:translateY(2px);box-shadow:inset 0 2px 5px rgba(120,80,0,.4),0 1px 2px rgba(30,20,10,.5)}
+.big.alt{min-height:66px;font-size:21px;padding:0 20px;border-width:1px}
+.big.alt svg{width:26px;height:26px}
+
+/* start, lock, setup, help */
+#start{align-items:center;justify-content:flex-start;gap:14px;padding:18px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#start::before,#start::after{content:"";flex:1 0 0}
+#start img{max-height:32vh;max-width:66vw;border-radius:2px;box-shadow:0 1px 2px rgba(30,20,10,.5),0 8px 16px rgba(30,20,10,.38)}
+#start .sub{font-family:var(--hand);font-weight:700;color:var(--ink);font-size:23px;text-align:center;min-height:1.2em;padding:0 12px;margin-top:-4px}
+.note{font-family:-apple-system,system-ui,sans-serif;font-size:16px;font-weight:600;color:var(--muted);text-align:center;max-width:22em;line-height:1.35;margin-top:-6px}
+.note.ok{color:var(--ink);font-size:18px}
+.helpbtn{font-size:17px;min-height:48px;padding:0 16px;display:inline-flex;align-items:center;gap:10px;align-self:center}
+.helpbtn b{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#2a211a;color:#f6ecd4;font-family:-apple-system,system-ui,sans-serif;font-size:17px;text-shadow:none}
 #lock{align-items:center;justify-content:center;padding:28px}
 #lockform{display:flex;flex-direction:column;align-items:stretch;gap:18px;width:min(86vw,440px)}
-#lockform label{font-family:var(--hand);font-size:26px;color:var(--ink)}
-#pw{font:inherit;font-family:-apple-system,system-ui,sans-serif;font-size:24px;padding:16px 18px;border:3px solid var(--ink);border-radius:6px;background:#f6ecd4;color:var(--ink);-webkit-user-select:text;user-select:text}
-#lockform .big{justify-content:center}
-#lockmsg{min-height:2.8em;font-family:-apple-system,system-ui,sans-serif;font-size:19px;font-weight:600;color:var(--red);text-align:center}
+#lockform label{font-family:var(--stamp);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:20px;color:var(--ink)}
+#pw{font:inherit;font-family:-apple-system,system-ui,sans-serif;font-size:24px;padding:16px 18px;border:1px solid rgba(70,45,20,.6);border-radius:4px;background:#f8f2e2;color:var(--ink);
+  box-shadow:inset 0 2px 4px rgba(60,35,10,.28),0 1px 0 rgba(255,255,255,.5);-webkit-user-select:text;user-select:text}
+#lockmsg{min-height:2.8em;font-family:-apple-system,system-ui,sans-serif;font-size:19px;font-weight:600;color:#9a1c12;text-align:center}
+#locknote{font-family:-apple-system,system-ui,sans-serif;font-size:18px;font-weight:600;line-height:1.35;text-align:center;background:#f8f2e2;border-left:6px solid var(--yellow);border-radius:3px;padding:12px 14px;box-shadow:0 2px 4px rgba(40,25,10,.3)}
 #setup{align-items:center;justify-content:center;gap:22px;padding:28px;text-align:center}
-#setup h2{margin:0;font-family:var(--hand);font-size:34px;font-weight:400;color:var(--ink)}
-#setup p{margin:0;font-size:21px;line-height:1.4;max-width:30em}
-#dlbar{width:min(84vw,520px);height:20px;background:#f6ecd4;border:2.5px solid var(--ink);border-radius:3px;overflow:hidden}
-#dlfill{height:100%;width:0;background:var(--yellow);border-right:2.5px solid var(--ink)}
-#dlstat{font-family:-apple-system,system-ui,sans-serif;font-size:19px;color:var(--muted);min-height:1.4em}
-.plain{min-height:60px;padding:0 28px;border:2.5px solid var(--ink);border-radius:var(--wob);font-family:var(--hand);font-size:23px}
-#start .sub{font-family:var(--hand);color:var(--muted);font-size:22px;text-align:center;min-height:1.3em;padding:0 12px}
-
-/* start-screen setup helpers */
-.big{max-width:92vw}
-.big.alt{background:rgba(246,236,212,.75);min-height:72px;font-size:24px;padding:0 22px}
-.note{font-family:-apple-system,system-ui,sans-serif;font-size:17px;font-weight:600;color:var(--muted);text-align:center;max-width:22em;line-height:1.35;margin-top:-12px}
-.note.ok{color:var(--ink);font-size:19px}
-.helpbtn{font-family:var(--hand);font-size:20px;color:var(--ink);min-height:50px;padding:0 18px;border:2.5px solid var(--ink);border-radius:var(--wob);background:rgba(246,236,212,.55);
-  display:inline-flex;align-items:center;gap:10px;align-self:center}
-.helpbtn b{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#f6ecd4;font-family:-apple-system,system-ui,sans-serif;font-size:18px}
-#locknote{font-family:-apple-system,system-ui,sans-serif;font-size:19px;font-weight:600;line-height:1.35;text-align:center;background:var(--yellow);border:2.5px solid var(--ink);border-radius:6px;padding:12px 14px}
+#setup h2,#help h2{margin:0;font-family:var(--stamp);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:28px;color:var(--ink)}
+#setup p{margin:0;font-size:20px;line-height:1.4;max-width:30em}
+#dlbar{width:min(84vw,520px);height:22px;background:#f8f2e2;border:1px solid rgba(70,45,20,.6);border-radius:3px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(60,35,10,.28)}
+#dlfill{height:100%;width:0;background:linear-gradient(#ffe57a,#f6c927 45%,#dfa70f);border-right:1px solid #7a5a00}
+#dlstat{font-family:-apple-system,system-ui,sans-serif;font-size:19px;font-weight:600;color:var(--muted);min-height:1.4em}
+.plain{min-height:58px;padding:0 28px;font-size:20px}
 #help{padding:22px;overflow-y:auto;-webkit-overflow-scrolling:touch}
-#help h2{margin:6px 0 14px;font-family:var(--hand);font-weight:400;font-size:32px;text-align:center}
-#help ol{list-style:none;margin:0 auto;padding:0;max-width:30em;display:flex;flex-direction:column;gap:14px}
-#help li{display:flex;gap:14px;align-items:flex-start;background:rgba(246,236,212,.7);border:2.5px solid var(--ink);border-radius:8px;padding:14px;font-family:-apple-system,system-ui,sans-serif;font-size:21px;line-height:1.35}
-#help li>b{flex:0 0 40px;height:40px;border-radius:50%;background:var(--yellow);border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--hand);font-size:24px;font-weight:400}
-#help li svg{width:30px;height:30px;vertical-align:-7px;margin:0 3px;fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#help h2{margin:6px 0 14px;text-align:center}
+#help ol{list-style:none;margin:0 auto;padding:0;max-width:30em;display:flex;flex-direction:column;gap:12px}
+#help li{display:flex;gap:14px;align-items:flex-start;background:#f8f2e2;border-radius:3px;padding:14px;font-family:-apple-system,system-ui,sans-serif;font-size:20px;line-height:1.35;box-shadow:0 1px 1px rgba(40,25,10,.3),0 3px 6px rgba(40,25,10,.25)}
+#help li>b{flex:0 0 38px;height:38px;border-radius:50%;background:linear-gradient(#ffe57a,#dfa70f);border:1.5px solid #2b2b2b;display:flex;align-items:center;justify-content:center;font-family:var(--stamp);font-size:22px}
+#help li svg{width:28px;height:28px;vertical-align:-7px;margin:0 3px;fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 #help li em{font-style:normal;font-weight:700}
-#help .small{font-size:17px;color:var(--muted);display:block;margin-top:4px}
+#help .small{font-size:16px;color:var(--muted);display:block;margin-top:4px}
 #helpok{margin:18px auto 8px;align-self:center}
 
 /* player */
-#head{padding:16px 22px 4px;text-align:center}
-#part{font-family:-apple-system,system-ui,sans-serif;font-weight:600;color:var(--muted);font-size:13px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#title{font-family:var(--hand);font-size:31px;font-weight:400;color:var(--ink);margin:4px auto 0;line-height:1.12;display:inline-block;padding:0 6px 3px;
-  border-bottom:3px solid var(--ink);border-radius:0 0 60% 40%/0 0 6px 9px}
+#head{padding:14px 22px 2px;text-align:center}
+#part{font-family:var(--stamp);font-weight:700;color:var(--muted);font-size:14px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#title{font-family:var(--hand);font-size:33px;font-weight:700;color:rgba(43,38,34,.9);margin:2px auto 0;line-height:1.1;display:inline-block;padding:0 4px 2px;border-bottom:2px solid rgba(43,38,34,.55)}
 #read{flex:1;min-height:0;position:relative;overflow:hidden;padding:0 28px;touch-action:none;
   -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 24%,#000 62%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 24%,#000 62%,transparent 100%)}
-#cur{position:relative;margin:0;font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-weight:400;font-size:var(--fs);
-  line-height:1.62;text-align:left;color:var(--faint);transition:transform 1.1s cubic-bezier(.3,.1,.3,1);will-change:transform}
+#cur{position:relative;margin:0;font-family:var(--serif);font-weight:400;font-size:var(--fs);line-height:1.62;text-align:left;color:var(--faint);
+  transition:transform 1.1s cubic-bezier(.3,.1,.3,1);will-change:transform}
 #cur span{transition:color 1.1s ease}
 #cur .now{color:var(--ink)}
-#cur .ttl{display:block;font-family:var(--hand);font-size:.8em;letter-spacing:.08em;margin-bottom:.8em}
+#cur .ttl{display:block;font-family:var(--stamp);font-weight:700;font-size:.62em;letter-spacing:.16em;margin-bottom:.9em}
 #cur .par::before{content:"";display:block;height:.7em}
 @media (prefers-reduced-motion:reduce){#cur,#cur span{transition-duration:.2s}}
 
-/* the whole book: a folding rule, one hinged length per part */
-#rule{position:relative;display:flex;margin:12px 16px 4px;height:32px}
+/* the whole book: a boxwood folding rule with brass hinges */
+#rule{position:relative;display:flex;margin:12px 16px 4px;height:30px;filter:drop-shadow(0 2px 2px rgba(40,25,10,.4))}
 .seg{flex:1 0 26px;min-width:0;height:100%;position:relative;display:flex;align-items:flex-start;justify-content:center;padding-top:1px;
-  border:2.5px solid var(--ink);border-left-width:0;font-family:var(--hand);font-size:17px;line-height:1.1;color:var(--ink);
-  background-color:#f1dfb4;background-image:repeating-linear-gradient(90deg,rgba(38,34,29,.55) 0 1.5px,transparent 1.5px 9px);background-size:100% 7px;background-repeat:no-repeat;background-position:left bottom}
-.seg:first-child{border-left-width:2.5px;border-radius:5px 0 0 5px}
-.seg:last-of-type{border-radius:0 5px 5px 0}
-.seg+.seg::before{content:"";position:absolute;left:-7px;top:50%;width:9px;height:9px;margin-top:-6.5px;border-radius:50%;background:#b98a2c;border:2px solid var(--ink);z-index:1}
-.seg.done{background-color:#c9a264}
-.seg.cur{background-color:var(--yellow)}
-.seg:active{filter:brightness(.9)}
-#rulemark{position:absolute;top:-7px;bottom:-7px;left:0;width:7px;margin-left:-3.5px;background:var(--red);border:1.5px solid var(--ink);border-radius:2px 2px 4px 4px;z-index:2;pointer-events:none;transition:left .6s ease;box-shadow:1px 2px 0 rgba(38,34,29,.3)}
+  border:1px solid #7d6128;border-left-width:0;font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:15px;line-height:1.15;color:#1c1712;
+  background:repeating-linear-gradient(90deg,rgba(28,23,18,.75) 0 1px,transparent 1px 9px) left bottom/100% 7px no-repeat,
+    repeating-linear-gradient(90deg,rgba(28,23,18,.75) 0 1px,transparent 1px 45px) left bottom/100% 11px no-repeat,
+    linear-gradient(#f6e8bd,#ead49a 60%,#d9bd7c)}
+.seg:first-child{border-left-width:1px;border-radius:3px 0 0 3px}
+.seg:last-of-type{border-radius:0 3px 3px 0}
+.seg+.seg::before{content:"";position:absolute;left:-6px;top:50%;width:10px;height:10px;margin-top:-7px;border-radius:50%;z-index:1;
+  background:radial-gradient(circle at 35% 30%,#fff4b8,#d9a833 45%,#8a6412);border:1px solid #5a4010;box-shadow:0 1px 1px rgba(40,25,10,.5)}
+.seg.done{background:repeating-linear-gradient(90deg,rgba(28,23,18,.75) 0 1px,transparent 1px 9px) left bottom/100% 7px no-repeat,
+    repeating-linear-gradient(90deg,rgba(28,23,18,.75) 0 1px,transparent 1px 45px) left bottom/100% 11px no-repeat,
+    linear-gradient(#cfb37a,#bd9c5e 60%,#a98749)}
+.seg.cur{background:repeating-linear-gradient(90deg,rgba(28,23,18,.75) 0 1px,transparent 1px 9px) left bottom/100% 7px no-repeat,
+    repeating-linear-gradient(90deg,rgba(28,23,18,.75) 0 1px,transparent 1px 45px) left bottom/100% 11px no-repeat,
+    linear-gradient(#fff3b0,#f6d24a 60%,#e2b21c)}
+.seg:active{filter:brightness(.92)}
+#rulemark{position:absolute;top:-6px;bottom:-6px;left:0;width:6px;margin-left:-3px;z-index:2;pointer-events:none;transition:left .6s ease;border-radius:1px 1px 3px 3px;
+  background:linear-gradient(90deg,#7d140d,#d93a2c 40%,#e9695c 52%,#b72016 72%,#6e110b);border:1px solid #4a0c07;box-shadow:1px 2px 2px rgba(30,15,5,.45)}
 
-/* progress: a tape measure, with a red pencil as the marker */
-#bar{margin:0 16px;height:56px;display:flex;align-items:center}
-#seek{-webkit-appearance:none;appearance:none;width:100%;height:56px;margin:0;background:transparent;touch-action:none}
-#seek::-webkit-slider-runnable-track{height:20px;border:2.5px solid var(--ink);border-radius:3px;background:
-  linear-gradient(to right,rgba(38,34,29,.30) var(--pct,0%),transparent var(--pct,0%)),
-  repeating-linear-gradient(90deg,rgba(38,34,29,.85) 0 2px,transparent 2px 10%),
-  repeating-linear-gradient(90deg,rgba(38,34,29,.45) 0 1px,transparent 1px 2%),
-  var(--yellow)}
-#seek::-moz-range-track{height:16px;border:2.5px solid var(--ink);border-radius:3px;background:var(--yellow)}
-#seek::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:50px;margin-top:-18px;border-radius:5px 5px 9px 9px;border:2.5px solid var(--ink);
-  background:linear-gradient(90deg,#8f1d15 0 22%,var(--red) 22% 78%,#8f1d15 78%);box-shadow:2px 3px 0 rgba(38,34,29,.28)}
-#seek::-moz-range-thumb{width:20px;height:44px;border-radius:5px;border:2.5px solid var(--ink);background:var(--red)}
+/* this story: a steel tape with a red carpenter's pencil laid across it */
+#bar{margin:0 16px;height:58px;display:flex;align-items:center}
+#seek{-webkit-appearance:none;appearance:none;width:100%;height:58px;margin:0;background:transparent;touch-action:none}
+#seek::-webkit-slider-runnable-track{height:24px;border:1px solid #7a5a00;border-radius:2px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.65),inset 0 -2px 3px rgba(120,80,0,.3),0 2px 4px rgba(40,25,10,.42);background:
+  linear-gradient(to right,rgba(60,40,0,.30) var(--pct,0%),transparent var(--pct,0%)),
+  repeating-linear-gradient(90deg,rgba(20,16,10,.9) 0 1.5px,transparent 1.5px 10%) left top/100% 62% no-repeat,
+  repeating-linear-gradient(90deg,rgba(20,16,10,.8) 0 1px,transparent 1px 5%) left top/100% 42% no-repeat,
+  repeating-linear-gradient(90deg,rgba(20,16,10,.7) 0 1px,transparent 1px 1%) left top/100% 24% no-repeat,
+  linear-gradient(#ffe676,#f6c927 45%,#e0a80f)}
+#seek::-moz-range-track{height:20px;border:1px solid #7a5a00;border-radius:2px;background:linear-gradient(#ffe676,#f6c927 45%,#e0a80f)}
+#seek::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:56px;margin-top:-17px;border-radius:2px 2px 3px 3px;border:1px solid #4a0c07;
+  background:linear-gradient(rgba(214,184,136,.0) 0 86%,#d9b98a 86%),linear-gradient(90deg,#7d140d,#c8281c 28%,#ea5446 48%,#b72016 70%,#6e110b);
+  box-shadow:2px 4px 5px rgba(30,15,5,.45),inset 0 1px 0 rgba(255,255,255,.35)}
+#seek::-moz-range-thumb{width:20px;height:50px;border-radius:2px;border:1px solid #4a0c07;background:linear-gradient(90deg,#7d140d,#c8281c 28%,#ea5446 48%,#b72016 70%,#6e110b)}
 #times{display:flex;justify-content:space-between;margin:-2px 22px 0;color:var(--muted);font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;font-family:-apple-system,system-ui,sans-serif}
-#ctl{display:grid;grid-template-columns:1fr 1fr 1.25fr 1fr;align-items:end;justify-items:center;gap:4px;padding:10px 10px 4px}
-.c{display:flex;flex-direction:column;align-items:center;gap:5px;font-family:var(--hand);font-size:16px;color:var(--muted);width:100%}
-.c .r{width:74px;height:74px;border-radius:50% 46% 52% 48%/48% 52% 46% 50%;border:3px solid var(--ink);display:flex;align-items:center;justify-content:center;background:rgba(246,236,212,.55)}
-.c svg{width:34px;height:34px;fill:var(--ink)}
-.c:active .r{background:rgba(38,34,29,.18)}
-#play .r{width:100px;height:100px;background:var(--yellow);border-width:3.5px;box-shadow:3px 4px 0 rgba(38,34,29,.25)}
-#play svg{width:46px;height:46px;fill:var(--ink)}
-#play:active .r{background:#d9a614}
 
-/* speed: slower / faster, with a rule that reads from the middle */
+/* controls: steel washers, and the yellow case for play */
+#ctl{display:grid;grid-template-columns:1fr 1fr 1.25fr 1fr;align-items:end;justify-items:center;gap:4px;padding:8px 10px 4px}
+.c{display:flex;flex-direction:column;align-items:center;gap:6px;font-family:var(--stamp);font-weight:700;text-transform:uppercase;letter-spacing:.07em;font-size:13px;color:var(--muted);width:100%}
+.c .r{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #6b7074;
+  background:conic-gradient(from 25deg,#f4f5f6,#a4aaaf 12%,#eef0f1 26%,#8e959a 41%,#f6f7f8 55%,#a9afb4 70%,#e9ebed 84%,#9aa0a5 93%,#f4f5f6);
+  box-shadow:inset 0 0 0 5px rgba(255,255,255,.18),inset 0 0 0 6px rgba(60,66,70,.35),0 4px 6px rgba(30,20,10,.42),0 1px 2px rgba(30,20,10,.5)}
+.c svg{width:32px;height:32px;fill:#23272a}
+.c:active .r{transform:translateY(2px);box-shadow:inset 0 0 0 5px rgba(255,255,255,.12),inset 0 0 0 6px rgba(60,66,70,.35),0 1px 2px rgba(30,20,10,.5)}
+#play .r{width:98px;height:98px;border:4px solid #2b2b2b;background:radial-gradient(circle at 35% 28%,#fff0a0,#f6c927 46%,#d49b0a);
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.65),inset 0 -5px 8px rgba(120,80,0,.35),0 6px 10px rgba(30,20,10,.45),0 1px 2px rgba(30,20,10,.5)}
+#play svg{width:44px;height:44px;fill:#1f1b16}
+#play:active .r{box-shadow:inset 0 3px 8px rgba(120,80,0,.45),0 1px 2px rgba(30,20,10,.5)}
+
+/* pace: slower / faster either side of a steel rule */
 #speed{display:flex;align-items:center;gap:12px;padding:8px 18px 0}
-#speed button{flex:0 0 104px;min-height:52px;border:2.5px solid var(--ink);border-radius:var(--wob);font-family:var(--hand);font-size:21px;background:rgba(246,236,212,.55)}
-#speed button:active{background:rgba(38,34,29,.18)}
-#speed button:disabled{opacity:.35}
-#gauge{flex:1;height:30px;display:flex;align-items:flex-end;border-bottom:2.5px solid var(--ink)}
-#gauge i{flex:1;height:9px;border-left:2px solid var(--ink);opacity:.4}
-#gauge i.mid{height:18px;opacity:.75}
-#gauge i.on{height:28px;border-left:6px solid var(--red);opacity:1}
+#speed button{flex:0 0 104px;min-height:50px;font-size:17px}
+#gauge{flex:1;height:26px;display:flex;align-items:flex-end;padding:0 4px;border:1px solid #6b7074;border-radius:2px;
+  background:linear-gradient(#eef0f1,#c4c9cd 55%,#aab0b5);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 3px rgba(40,25,10,.38)}
+#gauge i{flex:1;height:8px;border-left:1px solid #2b2f32;opacity:.75}
+#gauge i.mid{height:15px;opacity:1}
+#gauge i.on{height:24px;border-left:5px solid var(--red);opacity:1}
 #foot{display:flex;gap:12px;padding:8px 18px 12px}
-#foot button{flex:1;min-height:56px;border:2.5px solid var(--ink);border-radius:var(--wob);font-family:var(--hand);font-size:23px;background:rgba(246,236,212,.55)}
-#foot button:active{background:rgba(38,34,29,.18)}
-#aminus,#aplus{flex:0 0 66px!important;font-family:Georgia,serif!important;font-weight:700}
+#foot button{flex:1;min-height:54px;font-size:19px}
+#aminus,#aplus{flex:0 0 66px!important;font-family:Georgia,serif!important;text-transform:none!important;letter-spacing:0!important}
 #aminus{font-size:19px!important}#aplus{font-size:27px!important}
-#foot button:disabled{opacity:.35}
 
-/* list */
+/* list: names written on the board, with scored lines between */
 #rows{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 8px}
-.ph{position:sticky;top:0;background:#cfa769;color:var(--ink);font-family:-apple-system,system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
-  padding:14px 22px 8px;border-bottom:2.5px solid var(--ink)}
-.row{display:flex;align-items:center;gap:14px;width:100%;min-height:72px;padding:10px 22px;text-align:left;border-bottom:1.5px solid var(--line);font-family:var(--hand);font-size:25px;line-height:1.2}
-.row:active{background:rgba(38,34,29,.14)}
+.ph{position:sticky;top:0;z-index:1;background:linear-gradient(rgba(64,38,14,.72),rgba(64,38,14,.72)),url(wood.jpg);background-size:auto,620px auto;color:#f6e9cc;
+  font-family:var(--stamp);font-weight:700;font-size:14px;letter-spacing:.16em;text-transform:uppercase;padding:12px 22px 9px;box-shadow:0 2px 4px rgba(30,20,10,.4)}
+.row{display:flex;align-items:center;gap:14px;width:100%;min-height:70px;padding:10px 22px;text-align:left;font-family:var(--serif);font-size:23px;line-height:1.2;
+  border-bottom:1px solid rgba(70,45,20,.38);box-shadow:0 1px 0 rgba(255,255,255,.4)}
+.row:active{background:rgba(60,35,10,.14)}
 .row .n{flex:1}
 .row .d{color:var(--muted);font-size:15px;font-weight:600;font-family:-apple-system,system-ui,sans-serif;white-space:nowrap}
-.row .k{width:22px;color:var(--red);font-size:22px;text-align:center;font-family:-apple-system,system-ui,sans-serif;font-weight:700}
-.row.on{background:rgba(242,189,29,.55)}
-#listfoot{padding:10px 18px 14px;border-top:2.5px solid var(--ink)}
-#listfoot button{width:100%;min-height:68px;border:3px solid var(--ink);border-radius:var(--wob);background:var(--yellow);color:var(--ink);font-family:var(--hand);font-size:26px}
-@media (min-width:700px){:root{--fs:37px}#title{font-size:42px}#read{padding:10px 8vw}.row{font-size:30px;min-height:84px}
-  .c .r{width:92px;height:92px}#play .r{width:124px;height:124px}.c{font-size:19px}#ctl{padding:14px 10vw 6px}#foot,#listfoot,#speed{padding-left:10vw;padding-right:10vw}#rule{margin-left:10vw;margin-right:10vw;height:38px}.seg{font-size:21px}#bar{margin:0 calc(10vw - 2px)}#times{margin-left:10vw;margin-right:10vw}}
-@media (max-height:700px){#ctl{padding-top:4px}.c .r{width:62px;height:62px}#play .r{width:84px;height:84px}#speed button{min-height:44px}#foot button{min-height:46px}#bar{height:46px}}
+.row .k{width:22px;color:var(--red);font-size:21px;text-align:center;font-family:-apple-system,system-ui,sans-serif;font-weight:700}
+.row.on{background:rgba(255,246,214,.55);box-shadow:inset 6px 0 0 var(--red),0 1px 0 rgba(255,255,255,.4)}
+.row.on .n{font-weight:700}
+.row.photos .n{font-family:var(--stamp);font-weight:700;text-transform:uppercase;letter-spacing:.07em;font-size:20px}
+.row.photos svg{width:26px;height:26px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
+#listfoot{padding:10px 18px 14px;box-shadow:0 -2px 4px rgba(30,20,10,.3)}
+#listfoot button{width:100%}
+
+/* photographs: prints laid on the bench */
+#album{padding-top:calc(env(safe-area-inset-top) + 8px)}
+#phtop{display:flex;gap:10px;padding:0 14px 8px;align-items:center}
+.chip{flex:1;min-height:46px;font-size:15px;padding:0 8px}
+.chip.on{background:linear-gradient(#ffe57a,#f6c927 42%,#dfa70f);border-color:#2b2b2b}
+#phclose{flex:0 0 84px}
+#phbox{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:6px 12px;overflow:hidden;touch-action:pan-y}
+#phimg{max-width:100%;max-height:100%;background:#fff;border-radius:2px;box-shadow:0 1px 2px rgba(30,20,10,.5),0 8px 18px rgba(30,20,10,.4)}
+#phbox.rot #phimg{max-width:var(--bh,100%);max-height:var(--bw,100%);transform:rotate(90deg)}
+#phbox.zoom{display:block;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}
+#phbox.zoom #phimg{max-width:none;max-height:none;width:230%}
+#phbar{display:grid;grid-template-columns:1.2fr auto 1.2fr;gap:10px;align-items:center;padding:8px 14px 4px}
+#phbar button{min-height:68px;font-size:22px;display:flex;align-items:center;justify-content:center;gap:8px}
+#phbar svg{width:26px;height:26px;fill:#2a211a}
+#phcount{font-family:-apple-system,system-ui,sans-serif;font-weight:700;font-size:18px;color:var(--ink);min-width:86px;text-align:center;font-variant-numeric:tabular-nums}
+#phtools{display:flex;gap:10px;padding:4px 14px 12px}
+#phtools .chip{min-height:44px}
+
+@media (min-width:700px){:root{--fs:37px}#title{font-size:44px}#read{padding:10px 8vw}.row{font-size:28px;min-height:82px}
+  .c .r{width:90px;height:90px}#play .r{width:122px;height:122px}.c{font-size:16px}#ctl{padding:14px 10vw 6px}#foot,#listfoot,#speed{padding-left:10vw;padding-right:10vw}
+  #bar{margin:0 calc(10vw - 2px)}#times{margin-left:10vw;margin-right:10vw}#rule{margin-left:10vw;margin-right:10vw;height:36px}.seg{font-size:19px}
+  #phtop,#phbar,#phtools{padding-left:8vw;padding-right:8vw}#phbar button{min-height:80px;font-size:26px}}
+@media (max-height:700px){#ctl{padding-top:4px}.c .r{width:60px;height:60px}#play .r{width:82px;height:82px}#speed button{min-height:42px}#foot button{min-height:44px}#bar{height:46px}
+  #start img{max-height:26vh}.big{min-height:64px}.big.alt{min-height:54px}#phbar button{min-height:56px}}
 </style>
 </head>
 <body>
@@ -173,17 +217,18 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   <img id="cover" alt="">
   <button class="big" id="go"><svg viewBox="0 0 24 24"><path d="M7 4v16l14-8z"/></svg><span id="golabel">Play</span></button>
   <div class="sub" id="gosub"></div>
-  <button class="big alt" id="setupbtn"><svg viewBox="0 0 24 24"><path id="setupicon" d="M11 3h2v9.200l3.300-3.300 1.400 1.400L12 16l-5.700-5.700 1.400-1.400 3.300 3.300zM5 19h14v2H5z"/></svg><span id="setuplabel">Download all stories</span></button>
+  <button class="big alt" id="photosbtn"><svg viewBox="0 0 24 24" style="fill:none;stroke:#2a211a;stroke-width:2;stroke-linejoin:round"><rect x="3" y="5" width="18" height="14" rx="1.500"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="16" cy="9.500" r="1.500"/></svg><span>Photos and documents</span></button>
+  <button class="big alt" id="setupbtn"><svg viewBox="0 0 24 24"><path id="setupicon" d="M11 3h2v9.200l3.300-3.300 1.400 1.400L12 16l-5.700-5.700 1.400-1.400 3.300 3.300zM5 19h14v2H5z"/></svg><span id="setuplabel">Download everything</span></button>
   <div class="note" id="setupnote"></div>
   <button class="helpbtn" id="help1"><b>?</b>How to add to the Home Screen</button>
 </section>
 
 <section class="screen" id="setup" hidden>
-  <h2>Offline listening</h2>
-  <p id="dlmsg">This saves all 79 stories on this device (about 345&nbsp;MB) so they play without the internet. Use Wi-Fi and keep this screen open until it finishes.</p>
+  <h2>Save to this device</h2>
+  <p id="dlmsg">This saves every story and all the photos on this device (about 355&nbsp;MB) so they work without the internet. Use Wi-Fi and keep this screen open until it finishes.</p>
   <div id="dlbar"><div id="dlfill"></div></div>
   <div id="dlstat"></div>
-  <button class="big" id="dlgo">Download all stories</button>
+  <button class="big" id="dlgo">Download everything</button>
   <button class="plain" id="dlback">Back</button>
 </section>
 
@@ -211,6 +256,17 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   </div>
   <div id="speed"><button id="slower" aria-label="Read slower">Slower</button><div id="gauge" aria-hidden="true"></div><button id="faster" aria-label="Read faster">Faster</button></div>
   <div id="foot"><button id="open">All stories</button><button id="aminus" aria-label="Smaller text">A−</button><button id="aplus" aria-label="Bigger text">A+</button></div>
+</section>
+
+<section class="screen" id="album" hidden>
+  <div id="phtop"><span id="phsecs" style="display:contents"></span><button class="chip" id="phclose">Close</button></div>
+  <div id="phbox"><img id="phimg" alt=""></div>
+  <div id="phbar">
+    <button id="phprev" aria-label="Previous page"><svg viewBox="0 0 24 24"><path d="M15.500 4.500v15L5 12z"/></svg>Back</button>
+    <div id="phcount"></div>
+    <button id="phnext" aria-label="Next page">Next<svg viewBox="0 0 24 24"><path d="M8.500 4.500v15L19 12z"/></svg></button>
+  </div>
+  <div id="phtools"><button class="chip" id="phzoom">Bigger</button><button class="chip" id="phturn">Turn sideways</button></div>
 </section>
 
 <section class="screen" id="list" hidden>
@@ -303,24 +359,25 @@ async function getText(id){return JSON.parse(new TextDecoder().decode(await dec(
 let dlBusy=false;
 async function countSaved(){let n=0;try{const c=await caches.open(MEDIA);const keys=await c.keys();const have=new Set(keys.map(k=>new URL(k.url).pathname.split('/').slice(-2).join('/')));
   for(const s of STORIES)if(have.has(aurl(s.id))&&have.has(turl(s.id)))n++}catch(e){}return n}
-async function dlRefresh(){const n=await countSaved(),N=STORIES.length;
+async function countPhotos(){let n=0;try{const c=await caches.open(MEDIA);const keys=await c.keys();const have=new Set(keys.map(k=>new URL(k.url).pathname.split('/').slice(-2).join('/')));
+  for(let k=1;k<=PH.n;k++)if(have.has(purl(k)))n++}catch(e){}return n}
+const allTotal=()=>STORIES.length+PH.n;
+async function countAll(){return (await countSaved())+(await countPhotos())}
+const savedLine=()=>'All '+STORIES.length+' stories'+(PH.n?' and '+PH.n+' photo pages':'')+' are saved on this device.';
+async function dlRefresh(){const n=await countAll(),N=allTotal();
   $('dlfill').style.width=(n/N*100)+'%';
-  if(n===N){$('dlstat').textContent='All '+N+' stories are saved on this device.';$('dlgo').hidden=true}
-  else{$('dlstat').textContent=n?n+' of '+N+' saved':'';$('dlgo').hidden=false;$('dlgo').textContent=n?'Carry on downloading':'Download all stories'}
+  if(n===N){$('dlstat').textContent=savedLine();$('dlgo').hidden=true}
+  else{$('dlstat').textContent=n?n+' of '+N+' saved':'';$('dlgo').hidden=false;$('dlgo').textContent=n?'Carry on downloading':'Download everything'}
   return n}
 async function dlAll(){if(dlBusy)return;dlBusy=true;$('dlgo').hidden=true;
   let lock=null;try{lock=await navigator.wakeLock.request('screen')}catch(e){}
   try{if(navigator.storage&&navigator.storage.persist)await navigator.storage.persist()}catch(e){}
-  const N=STORIES.length;let fail=0;
+  const N=allTotal();let fail=0,done=0;
+  const grab=async(c,u)=>{if(await c.match(u))return;try{const r=await fetch(u,{cache:'no-store'});if(!r.ok||r.status!==200)throw 0;await c.put(u,r)}catch(e){fail++}};
   try{const c=await caches.open(MEDIA);
-    for(let i=0;i<N;i++){const s=STORIES[i];
-      for(const u of [turl(s.id),aurl(s.id)]){
-        if(await c.match(u))continue;
-        try{const r=await fetch(u,{cache:'no-store'});if(!r.ok||r.status!==200)throw 0;await c.put(u,r)}
-        catch(e){fail++}
-      }
-      $('dlfill').style.width=((i+1)/N*100)+'%';$('dlstat').textContent='Saving '+(i+1)+' of '+N+' — '+s.t;
-    }
+    for(let k=1;k<=PH.n;k++){await grab(c,purl(k));done++;$('dlfill').style.width=(done/N*100)+'%';$('dlstat').textContent='Saving photos — '+k+' of '+PH.n}
+    for(let i=0;i<STORIES.length;i++){const s=STORIES[i];await grab(c,turl(s.id));await grab(c,aurl(s.id));done++;
+      $('dlfill').style.width=(done/N*100)+'%';$('dlstat').textContent='Saving story '+(i+1)+' of '+STORIES.length+' — '+s.t}
   }catch(e){fail++}
   try{lock&&lock.release()}catch(e){}
   dlBusy=false;const n=await dlRefresh();
@@ -331,15 +388,15 @@ const ENV={ios:/iPad|iPhone|iPod/.test(navigator.userAgent||'')||((navigator.pla
 let needHome=ENV.ios&&!ENV.standalone;
 async function refreshStart(){const B=$('setupbtn'),N=$('setupnote'),L=$('setuplabel');
   $('help1').hidden=ENV.standalone;
-  if(needHome){B.hidden=false;L.textContent='Add to Home Screen';N.className='note';N.textContent='Do that first. Then open it from the Home Screen and download the stories there.';return}
+  if(needHome){B.hidden=false;L.textContent='Add to Home Screen';N.className='note';N.textContent='Do that first. Then open it from the Home Screen and download everything there.';return}
   if(!('caches' in window)){B.hidden=true;N.textContent='';return}
-  const n=await countSaved(),T=STORIES.length;
-  if(n===T){B.hidden=true;N.className='note ok';N.textContent='✓ All '+T+' stories are saved on this device.'}
-  else{B.hidden=false;L.textContent=n?'Carry on downloading':'Download all stories';N.className='note';N.textContent=n?(n+' of '+T+' saved so far.'):'Do this once on Wi-Fi. Then they play without the internet.'}}
+  const n=await countAll(),T=allTotal();
+  if(n===T){B.hidden=true;N.className='note ok';N.textContent='✓ '+savedLine()}
+  else{B.hidden=false;L.textContent=n?'Carry on downloading':'Download everything';N.className='note';N.textContent=n?(n+' of '+T+' saved so far.'):'Do this once on Wi-Fi. Then it all works without the internet.'}}
 let helpFrom='start';
 function openHelp(from){helpFrom=from;show('help')}
 $('help0').onclick=()=>openHelp('lock');$('help1').onclick=()=>openHelp('start');$('helpok').onclick=()=>show(helpFrom);
-$('setupbtn').onclick=()=>{if(needHome){openHelp('start');return}show('setup');dlRefresh().then(n=>{if(n<STORIES.length)dlAll()})};
+$('setupbtn').onclick=()=>{if(needHome){openHelp('start');return}show('setup');dlRefresh().then(n=>{if(n<allTotal())dlAll()})};
 $('dlback').onclick=()=>{show('start');refreshStart()};$('dlgo').onclick=dlAll;
 
 /* Whole-book rule. Each part is a length of the rule, sized by how long it runs; the red mark sits where he is. Tapping a length opens the story list at that part. */
@@ -404,29 +461,60 @@ $('slower').onclick=()=>{if(st.sp>-SP_MAX){st.sp--;save();applyRate()}};$('faste
 if('mediaSession' in navigator){const ms=navigator.mediaSession,h=(a,f)=>{try{ms.setActionHandler(a,f)}catch(e){}};
   h('play',()=>au.play());h('pause',()=>au.pause());h('seekbackward',back30);h('previoustrack',prevStory);h('nexttrack',()=>nextStory(false))}
 
+/* photographs and documents: one page at a time, with big Back and Next */
+let PH={n:0,sections:[]}, phUrl=null, phSeq=0, phZoom=false, phRot=false, albumFrom='start';
+const purl=n=>'d/p'+String(n).padStart(2,'0')+'.bin';
+function phApply(){const B=$('phbox');B.classList.toggle('zoom',phZoom);B.classList.toggle('rot',phRot&&!phZoom);
+  B.style.setProperty('--bw',(B.clientWidth-24)+'px');B.style.setProperty('--bh',(B.clientHeight-12)+'px');
+  $('phzoom').textContent=phZoom?'Whole page':'Bigger';$('phturn').disabled=phZoom;$('phturn').textContent=phRot?'Turn back':'Turn sideways';if(!phZoom){B.scrollTop=0;B.scrollLeft=0}}
+async function phShow(n){if(!PH.n)return;n=Math.max(1,Math.min(PH.n,n));st.pg=n;save();
+  $('phcount').textContent=n+' of '+PH.n;$('phprev').disabled=n<=1;$('phnext').disabled=n>=PH.n;
+  PH.sections.forEach((s,k)=>{const nx=PH.sections[k+1],e=$('phsec'+k);if(e)e.classList.toggle('on',n>=s[1]&&(!nx||n<nx[1]))});
+  phZoom=false;phRot=false;phApply();
+  const my=++phSeq;
+  try{const b=await dec(await getBytes(purl(n)));if(my!==phSeq)return;const u=URL.createObjectURL(new Blob([b],{type:'image/jpeg'})),old=phUrl;phUrl=u;$('phimg').src=u;$('phimg').alt='Page '+n;
+    if(old)setTimeout(()=>{try{URL.revokeObjectURL(old)}catch(e){}},800)}
+  catch(e){if(my===phSeq){$('phimg').removeAttribute('src');$('phcount').textContent='Could not load'}}}
+function openAlbum(from){albumFrom=from;show('album');const first=(PH.sections.find(s=>/photo/i.test(s[0]))||[0,1])[1];phShow(st.pg||first)}
+function buildAlbum(){const S=$('phsecs');S.textContent='';PH.sections.forEach((s,k)=>{const b=document.createElement('button');b.className='chip';b.id='phsec'+k;b.textContent=s[0];b.onclick=()=>phShow(s[1]);S.appendChild(b)});
+  $('photosbtn').hidden=!PH.n}
+$('phprev').onclick=()=>phShow((st.pg||1)-1);$('phnext').onclick=()=>phShow((st.pg||1)+1);
+$('phclose').onclick=()=>{show(albumFrom);if(albumFrom==='start')refreshStart()};
+$('phzoom').onclick=()=>{phZoom=!phZoom;phApply()};$('phturn').onclick=()=>{phRot=!phRot;phApply()};
+$('phimg').onclick=()=>{phZoom=!phZoom;phApply()};
+$('photosbtn').onclick=()=>openAlbum('start');
+(function(){const B=$('phbox');let x0=null,y0=0;
+  B.addEventListener('touchstart',e=>{if(e.touches.length===1&&!phZoom){x0=e.touches[0].clientX;y0=e.touches[0].clientY}else x0=null},{passive:true});
+  B.addEventListener('touchend',e=>{if(x0===null)return;const t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;
+    if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.5){phShow((st.pg||1)+(dx<0?1:-1))}},{passive:true});
+})();
+
 /* list */
 function buildRows(){const R=$('rows');let part=null;
+  if(PH.n){const b=document.createElement('button');b.className='row photos';
+    b.innerHTML='<span class="k"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.500"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg></span><span class="n">Photos and documents</span><span class="d"></span>';
+    b.children[2].textContent=PH.n+' pages';b.onclick=()=>openAlbum('list');R.appendChild(b)}
   STORIES.forEach((s,i)=>{if(s.p!==part){part=s.p;const h=document.createElement('div');h.className='ph';h.textContent=part;R.appendChild(h)}
     const b=document.createElement('button');b.className='row';b.dataset.i=i;
     b.innerHTML='<span class="k"></span><span class="n"></span><span class="d"></span>';
     b.children[1].textContent=s.t;b.children[2].textContent=mins(s.d);
     b.onclick=()=>{show('player');if(i!==st.i)load(i,0,true);else if(ready&&au.paused)au.play().catch(()=>{})};R.appendChild(b)})}
-function markRows(){document.querySelectorAll('.row').forEach(b=>{const i=+b.dataset.i;b.classList.toggle('on',i===st.i);b.firstChild.textContent=st.done[STORIES[i].id]?'✓':''})}
-function show(id){['lock','start','player','list','setup','help'].forEach(x=>$(x).hidden=x!==id);
+function markRows(){document.querySelectorAll('.row:not(.photos)').forEach(b=>{const i=+b.dataset.i;b.classList.toggle('on',i===st.i);b.firstChild.textContent=st.done[STORIES[i].id]?'✓':''})}
+function show(id){['lock','start','player','list','setup','help','album'].forEach(x=>$(x).hidden=x!==id);
   if(id==='list'){markRows();const on=document.querySelector('.row.on');if(on)on.scrollIntoView({block:'center'})}}
 $('open').onclick=()=>show('list');$('close').onclick=()=>show('player');
 
 /* unlock, then start */
-async function openIndex(raw){await useRaw(raw);return JSON.parse(new TextDecoder().decode(await dec(await getBytes('d/i.bin',true))))}
+async function openIndex(raw){await useRaw(raw);return JSON.parse(new TextDecoder().decode(await dec(await getBytes('d/i2.bin',true))))}
 async function init(idx){
-  META=idx;STORIES=idx.stories;
+  META=idx;STORIES=idx.stories;PH=idx.photos&&idx.photos.n?idx.photos:{n:0,sections:[]};
   if(!(st.i>=0&&st.i<STORIES.length)){st.i=0;st.t=0}
   try{document.title=idx.title}catch(e){}
   getBytes('d/c.bin',true).then(dec).then(b=>{$('cover').src=URL.createObjectURL(new Blob([b],{type:'image/jpeg'}));$('cover').alt=idx.title+', by '+idx.author}).catch(()=>{});
   const resuming=st.t>5||st.i>0;
   $('golabel').textContent=resuming?'Keep listening':'Play';
   $('gosub').textContent=resuming?STORIES[st.i].t:'';
-  $('rows').textContent='';buildRows();buildRule();
+  $('rows').textContent='';buildRows();buildRule();buildAlbum();
   refreshStart();
   show('start');
 }
@@ -441,11 +529,11 @@ $('lockform').onsubmit=async e=>{e.preventDefault();
   try{idx=await openIndex(raw)}catch(err){KEYOBJ=null;$('lockmsg').textContent=(err&&err.message==='net')?'No connection. Try again on Wi-Fi.':'That password did not work. Check it and try again.';return}
   try{localStorage.setItem(KS,btoa(String.fromCharCode.apply(null,raw)))}catch(err){}
   $('lockmsg').textContent='';$('pw').value='';init(idx)};
-async function tidyCache(){try{const c=await caches.open(MEDIA);for(const k of await c.keys()){if(/\/d\/[at]\d+\.bin$/.test(new URL(k.url).pathname))await c.delete(k)}}catch(e){}}
+async function tidyCache(){try{const c=await caches.open(MEDIA);for(const k of await c.keys()){if(/\/d\/([at]\d+|i)\.bin$/.test(new URL(k.url).pathname))await c.delete(k)}}catch(e){}}
 async function boot(){tidyCache();let saved=null;try{saved=localStorage.getItem(KS)}catch(e){}
   if(saved&&window.crypto&&crypto.subtle){try{return init(await openIndex(b64(saved)))}catch(e){KEYOBJ=null}}
   $('locknote').hidden=!needHome;show('lock')}
-document.addEventListener('keydown',e=>{if($('player').hidden)return;if(e.key===' '){e.preventDefault();toggle()}else if(e.key==='ArrowLeft')back30();else if(e.key==='ArrowRight')nextStory(false)});
+document.addEventListener('keydown',e=>{if(!$('album').hidden){if(e.key==='ArrowLeft')$('phprev').click();else if(e.key==='ArrowRight')$('phnext').click();return}if($('player').hidden)return;if(e.key===' '){e.preventDefault();toggle()}else if(e.key==='ArrowLeft')back30();else if(e.key==='ArrowRight')nextStory(false)});
 window.addEventListener('resize',()=>{applySize();ruleX=-1;setTimeout(ruleUpdate,80)});
 applySize();applyRate();boot();
 if('serviceWorker' in navigator){
