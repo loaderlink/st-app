@@ -182,7 +182,6 @@ button:disabled{opacity:.4}
 #phclose{flex:0 0 84px}
 #phbox{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:6px 12px;overflow:hidden;touch-action:pan-y}
 #phimg{max-width:100%;max-height:100%;background:#fff;border-radius:2px;box-shadow:0 1px 2px rgba(30,20,10,.5),0 8px 18px rgba(30,20,10,.4)}
-#phbox.rot #phimg{max-width:var(--bh,100%);max-height:var(--bw,100%);transform:rotate(90deg)}
 #phbox.zoom{display:block;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}
 #phbox.zoom #phimg{max-width:none;max-height:none;width:230%}
 #phbar{display:grid;grid-template-columns:1.2fr auto 1.2fr;gap:10px;align-items:center;padding:8px 14px 4px}
@@ -464,15 +463,22 @@ if('mediaSession' in navigator){const ms=navigator.mediaSession,h=(a,f)=>{try{ms
 /* photographs and documents: one page at a time, with big Back and Next */
 let PH={n:0,sections:[]}, phUrl=null, phSeq=0, phZoom=false, phRot=false, albumFrom='start';
 const purl=n=>'d/p'+String(n).padStart(2,'0')+'.bin';
-function phApply(){const B=$('phbox');B.classList.toggle('zoom',phZoom);B.classList.toggle('rot',phRot&&!phZoom);
-  B.style.setProperty('--bw',(B.clientWidth-24)+'px');B.style.setProperty('--bh',(B.clientHeight-12)+'px');
-  $('phzoom').textContent=phZoom?'Whole page':'Bigger';$('phturn').disabled=phZoom;$('phturn').textContent=phRot?'Turn back':'Turn sideways';if(!phZoom){B.scrollTop=0;B.scrollLeft=0}}
+let phOrig=null, phTurned=null;
+function phApply(){const B=$('phbox');B.classList.toggle('zoom',phZoom);
+  $('phzoom').textContent=phZoom?'Whole page':'Bigger';$('phturn').textContent=phRot?'Turn back':'Turn sideways';if(!phZoom){B.scrollTop=0;B.scrollLeft=0}}
+/* Some certificates are printed sideways on the page. Turning redraws the page a quarter-turn clockwise as a real image, so Bigger still works on it. */
+async function phTurn(){const I=$('phimg');if(!phOrig)return;
+  if(phRot){phRot=false;I.src=phOrig;phApply();return}
+  try{const im=new Image();im.src=phOrig;await im.decode();const c=document.createElement('canvas');c.width=im.naturalHeight;c.height=im.naturalWidth;
+    const x=c.getContext('2d');x.translate(c.width,0);x.rotate(Math.PI/2);x.drawImage(im,0,0);
+    const b=await new Promise(r=>c.toBlob(r,'image/jpeg',.9));if(!b)return;const u=URL.createObjectURL(b);
+    if(phTurned){try{URL.revokeObjectURL(phTurned)}catch(e){}}phTurned=u;I.src=u;phRot=true;phApply()}catch(e){}}
 async function phShow(n){if(!PH.n)return;n=Math.max(1,Math.min(PH.n,n));st.pg=n;save();
   $('phcount').textContent=n+' of '+PH.n;$('phprev').disabled=n<=1;$('phnext').disabled=n>=PH.n;
   PH.sections.forEach((s,k)=>{const nx=PH.sections[k+1],e=$('phsec'+k);if(e)e.classList.toggle('on',n>=s[1]&&(!nx||n<nx[1]))});
   phZoom=false;phRot=false;phApply();
   const my=++phSeq;
-  try{const b=await dec(await getBytes(purl(n)));if(my!==phSeq)return;const u=URL.createObjectURL(new Blob([b],{type:'image/jpeg'})),old=phUrl;phUrl=u;$('phimg').src=u;$('phimg').alt='Page '+n;
+  try{const b=await dec(await getBytes(purl(n)));if(my!==phSeq)return;const u=URL.createObjectURL(new Blob([b],{type:'image/jpeg'})),old=phUrl;phUrl=u;phOrig=u;$('phimg').src=u;$('phimg').alt='Page '+n;
     if(old)setTimeout(()=>{try{URL.revokeObjectURL(old)}catch(e){}},800)}
   catch(e){if(my===phSeq){$('phimg').removeAttribute('src');$('phcount').textContent='Could not load'}}}
 function openAlbum(from){albumFrom=from;show('album');const first=(PH.sections.find(s=>/photo/i.test(s[0]))||[0,1])[1];phShow(st.pg||first)}
@@ -480,7 +486,7 @@ function buildAlbum(){const S=$('phsecs');S.textContent='';PH.sections.forEach((
   $('photosbtn').hidden=!PH.n}
 $('phprev').onclick=()=>phShow((st.pg||1)-1);$('phnext').onclick=()=>phShow((st.pg||1)+1);
 $('phclose').onclick=()=>{show(albumFrom);if(albumFrom==='start')refreshStart()};
-$('phzoom').onclick=()=>{phZoom=!phZoom;phApply()};$('phturn').onclick=()=>{phRot=!phRot;phApply()};
+$('phzoom').onclick=()=>{phZoom=!phZoom;phApply()};$('phturn').onclick=phTurn;
 $('phimg').onclick=()=>{phZoom=!phZoom;phApply()};
 $('photosbtn').onclick=()=>openAlbum('start');
 (function(){const B=$('phbox');let x0=null,y0=0;
